@@ -1,0 +1,121 @@
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>GeoFire fish1 Example</title>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+    <!-- RSVP -->
+    <script src="https://unpkg.com/rsvp@3.1.0/dist/rsvp.min.js"></script>
+
+    <!-- GeoFire -->
+    <script src="https://cdn.firebase.com/libs/geofire/4.1.0/geofire.min.js"></script>
+
+    <!-- Custom JS -->
+    <!-- <script src="js/fish1.js" defer></script> -->
+
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href="css/fish1.css"> -->
+  </head>
+
+  <body>
+    <!-- Fish controls -->
+    <div id="fishControls">
+      <p>Get location of</p>
+
+      <select id="fishSelect">
+        <option value="fish0">Fish 0</option>
+        <option value="fish1">Fish 1</option>
+        <option value="fish2">Fish 2</option>
+        <option value="fish3">Fish 3</option>
+      </select>
+
+      <input id="getFishLocation" type="button" value="Get Location" />
+    </div>
+
+    <!-- Message log -->
+    <div id="log">
+        <div id="map" style="width:300px;height:300px"></div>
+    </div>
+
+
+  <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAI755venVr58C5F1wExAlItIbyYFv98TQ",
+        authDomain: "taxiexpress-ceb3f.firebaseapp.com",
+        databaseURL: "https://taxiexpress-ceb3f.firebaseio.com",
+        projectId: "taxiexpress-ceb3f",
+        storageBucket: "taxiexpress-ceb3f.appspot.com",
+        messagingSenderId: "583631002658"
+      };
+      firebase.initializeApp(config);
+    </script>
+  <script>
+    (function() {
+
+    // Get a reference to the database service
+    var database = firebase.database().ref('cars/1');
+
+    // Generate a random Firebase location
+    //var firebaseRef = firebase.database().ref('cars/1').push();
+    var firebaseRef = database.set({
+        placa: "1234",
+        color: "azul",
+        anio : "2005"
+      });
+
+    // Create a new GeoFire instance at the random Firebase location
+    var geoFire = new GeoFire(database);
+
+    var map;
+    var marker;
+
+        navigator.geolocation.getCurrentPosition(function(position) {
+            //myMap(position):
+            geoFire.set("location", [ position.coords.latitude , position.coords.longitude]).then(function() {
+              console.log("My location initially set to [" + position.coords.latitude +", "+ position.coords.longitude + "]");
+            });
+            var myCenter = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            var mapCanvas = document.getElementById("map");
+            var mapOptions = {center: myCenter, zoom: 14, scrollwheel: false,};
+            map = new google.maps.Map(mapCanvas, mapOptions);
+            marker = new google.maps.Marker({position:myCenter});
+            marker.setMap(map);
+        });
+
+
+
+      // Log the location of the selected fish every time the get fish location button is clicked
+      document.getElementById("getFishLocation").addEventListener("click", function() {
+        moveMarker();
+      });
+
+      function moveMarker(){
+        //alert("Agregar");
+        geoFire.set("location", [ 0 , 0]).then(function() {
+           console.log("My location changed to [0, 0]");
+        });
+        marker.setPosition( new google.maps.LatLng( 0, 0 ) );
+        map.panTo( new google.maps.LatLng( 0, 0 ) );
+      }
+
+
+
+    })();
+
+
+
+
+
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmz7oHEd5LqSGdal0vtfWUOkxn9GSUKt4&callback=myMap"></script>
+
+  </body>
+
+
+</html>
