@@ -13,6 +13,10 @@
     <!-- GeoFire -->
     <script src="https://cdn.firebase.com/libs/geofire/4.1.0/geofire.min.js"></script>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmz7oHEd5LqSGdal0vtfWUOkxn9GSUKt4"></script>
+
+
+
     <!-- Custom JS -->
     <!-- <script src="js/fish1.js" defer></script> -->
 
@@ -23,16 +27,8 @@
   <body>
     <!-- Fish controls -->
     <div id="fishControls">
-      <p>Get location of</p>
-
-      <select id="fishSelect">
-        <option value="fish0">Fish 0</option>
-        <option value="fish1">Fish 1</option>
-        <option value="fish2">Fish 2</option>
-        <option value="fish3">Fish 3</option>
-      </select>
-
-      <input id="getFishLocation" type="button" value="Get Location" />
+      <p>Send your current location to Firebase</p>
+      <input id="sendLocation" type="button" value="Send Location" />
     </div>
 
     <!-- Message log -->
@@ -62,21 +58,23 @@
 
     // Generate a random Firebase location
     //var firebaseRef = firebase.database().ref('cars/1').push();
-    var firebaseRef = database.set({
+    /*var firebaseRef = database.set({
         placa: "1234",
         color: "azul",
         anio : "2005"
       });
+      */
 
     // Create a new GeoFire instance at the random Firebase location
-    var geoFire = new GeoFire(database);
+    var databaseLocationRef = firebase.database().ref('carsLocations');
+    var geoFire = new GeoFire(databaseLocationRef);
 
     var map;
     var marker;
 
         navigator.geolocation.getCurrentPosition(function(position) {
             //myMap(position):
-            geoFire.set("location", [ position.coords.latitude , position.coords.longitude]).then(function() {
+            geoFire.set("1", [ position.coords.latitude , position.coords.longitude]).then(function() {
               console.log("My location initially set to [" + position.coords.latitude +", "+ position.coords.longitude + "]");
             });
             var myCenter = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
@@ -90,17 +88,21 @@
 
 
       // Log the location of the selected fish every time the get fish location button is clicked
-      document.getElementById("getFishLocation").addEventListener("click", function() {
+      document.getElementById("sendLocation").addEventListener("click", function() {
         moveMarker();
       });
 
       function moveMarker(){
         //alert("Agregar");
-        geoFire.set("location", [ 0 , 0]).then(function() {
-           console.log("My location changed to [0, 0]");
+        navigator.geolocation.getCurrentPosition(function(position) {
+          console.log("Get current position: [" + position.coords.latitude +", "+ position.coords.longitude + "]");
+          geoFire.set("1", [ position.coords.latitude , position.coords.longitude]).then(function() {
+             console.log("My location changed to " + [ position.coords.latitude , position.coords.longitude]);
+             marker.setPosition( new google.maps.LatLng( position.coords.latitude, position.coords.longitude ) );
+             map.panTo( new google.maps.LatLng( position.coords.latitude , position.coords.longitude ) );
+          });
+
         });
-        marker.setPosition( new google.maps.LatLng( 0, 0 ) );
-        map.panTo( new google.maps.LatLng( 0, 0 ) );
       }
 
 
@@ -113,7 +115,6 @@
 
     </script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmz7oHEd5LqSGdal0vtfWUOkxn9GSUKt4&callback=myMap"></script>
 
   </body>
 

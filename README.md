@@ -23,7 +23,8 @@ pip install virtualenv && pip install virtualenvwrapper
 
 Crear nuevo ambiente virtual 'env3' haciendo referencia a python 3  
 ```
-mkvirtualenv env3
+mkvirtualenv env3 #Si unicamente se tiene instalado python 3 
+mkvirtualenv -p python3 env3 #para crear el ambiente especificamente con python 3 en caso de que hayan mas instalaciones de python
 ```
 
 Activar nuevo ambiente creado
