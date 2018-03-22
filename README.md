@@ -45,3 +45,13 @@ Crear nuevo proyecto vacio en django
 ```
 django-admin startproject taxiexpress
 ```
+
+Crear Archivo de Dependencias
+```
+pip freeze > requirements.txt
+```
+
+Instalar Todas las dependencias del archivo [requirements.txt](requirements.txt)
+```
+pip install -r requirements.txt
+```
