@@ -18,6 +18,11 @@ class Person(models.Model):
     email = models.EmailField(max_length=120)
     picture = models.ImageField(upload_to='files/pictures')
 
+    @property
+    def full_name(self):
+        """Returns person full name."""
+        return '%s %s' % (self.first_name, self.last_name)
+
 
 class Driver(Person):
     """
@@ -25,6 +30,9 @@ class Driver(Person):
     """
 
     related_documents = models.ManyToManyField(Documents)
+
+    def __str__(self):
+        return self.full_name
 
 class VehicleMaker(models.Model):
     """

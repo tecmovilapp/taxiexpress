@@ -15,3 +15,6 @@ class Documents(models.Model):
     title = models.CharField(max_length=200)
     document = models.FileField(upload_to='files/documents')
     type = models.CharField(max_length=100, choices=DOCUMENT_TYPES)
+
+    def __str__(self):
+        return '%s-%s' % (self.title, self.type)
