@@ -5,24 +5,7 @@ from django.db import models
 
 from core.models import Documents
 from core.preset_choices import VEHICLE_STATUS
-# Create your models here.
-
-class Person(models.Model):
-    """
-        Class base to inherit its fields to another model related with a Person.
-    """
-
-    id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=120)
-    picture = models.ImageField(upload_to='files/pictures')
-
-    @property
-    def full_name(self):
-        """Returns person full name."""
-        return '%s %s' % (self.first_name, self.last_name)
-
+from core.models import Person
 
 class Driver(Person):
     """
@@ -59,6 +42,8 @@ class Vehicle(models.Model):
     register = models.CharField(max_length=30)
     number = models.CharField(max_length=10)
     year = models.CharField(max_length=8)
+    vin = models.CharField(max_length=30)
+    color = models.CharField(max_length=100)
     status = models.CharField(max_length=1, choices=VEHICLE_STATUS)
     made = models.ForeignKey('VehicleMaker', on_delete=models.CASCADE)
     model = models.ForeignKey('VehicleModel', on_delete=models.CASCADE)
