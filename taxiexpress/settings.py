@@ -59,7 +59,9 @@ ROOT_URLCONF = 'taxiexpress.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            '/taxiadmin/templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
