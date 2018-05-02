@@ -56,3 +56,6 @@ Instalar Todas las dependencias del archivo [requirements.txt](requirements.txt)
 ```
 pip install -r requirements.txt
 ```
+
+Instalar django-suit v2
+pip install https://github.com/darklow/django-suit/tarball/v2

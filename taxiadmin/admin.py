@@ -11,4 +11,9 @@ from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle
 admin.site.register(Driver)
 admin.site.register(VehicleMaker)
 admin.site.register(VehicleModel)
-admin.site.register(Vehicle)
+
+
+@admin.register(Vehicle)
+class VehicleAdmin(admin.ModelAdmin):
+    list_filter = ('number', 'year')
+    search_fields = ['number', 'register']

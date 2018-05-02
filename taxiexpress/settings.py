@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['45.79.74.150','www.placestime.com','placestime.com', 'localhos
 # Application definition
 
 INSTALLED_APPS = [
+    #'suit',
+    'core.layout.SuitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

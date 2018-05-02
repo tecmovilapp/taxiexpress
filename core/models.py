@@ -19,7 +19,6 @@ class Documents(models.Model):
     def __str__(self):
         return '%s-%s' % (self.title, self.type)
 
-
 class Person(models.Model):
     """
         Class base to inherit its fields to another model related with a Person.
