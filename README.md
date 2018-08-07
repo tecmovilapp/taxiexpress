@@ -58,4 +58,9 @@ pip install -r requirements.txt
 ```
 
 Instalar django-suit v2
+```
 pip install https://github.com/darklow/django-suit/tarball/v2
+```
+
+Archivo de configuracion para Visual Code
+[vs.settings.json](vs.settings.json)
