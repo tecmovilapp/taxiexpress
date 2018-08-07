@@ -25,12 +25,14 @@ SECRET_KEY = '7mq2q%4dw_4$v=+eejc4g%hm=ohar%*a-jllz)q46w!z8feo+0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['45.79.74.150','www.placestime.com','placestime.com', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.0', 'localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    #'suit',
+    'core.layout.SuitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,7 +59,9 @@ ROOT_URLCONF = 'taxiexpress.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            '/taxiadmin/templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

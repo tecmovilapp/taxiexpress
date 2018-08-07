@@ -18,3 +18,19 @@ class Documents(models.Model):
 
     def __str__(self):
         return '%s-%s' % (self.title, self.type)
+
+class Person(models.Model):
+    """
+        Class base to inherit its fields to another model related with a Person.
+    """
+
+    id = models.AutoField(primary_key=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    email = models.EmailField(max_length=120)
+    picture = models.ImageField(upload_to='files/pictures')
+
+    @property
+    def full_name(self):
+        """Returns person full name."""
+        return '%s %s' % (self.first_name, self.last_name)
