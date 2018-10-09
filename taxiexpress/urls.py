@@ -16,9 +16,15 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
+from django.utils.translation import gettext_lazy as _
+ 
+admin.site.index_title = _('Seven')
+admin.site.site_header = _('Seven Administrador')
+admin.site.site_title = _('Seven Administrador')
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     url(r'^cars/', include('cars.urls')),
     url(r'^taxiadmin/', include('taxiadmin.urls')),
     url(r'^admin/', admin.site.urls),
-]
+)
