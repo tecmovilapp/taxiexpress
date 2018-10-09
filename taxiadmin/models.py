@@ -59,3 +59,11 @@ class Vehicle(models.Model):
     def __str__(self):
         """Return the title"""
         return self.number
+
+
+class VehicleAssignment(models.Model):
+    """Assign vehicle to a driver."""
+
+    vehicle = models.ForeignKey('Vehicle', related_name='assignments', on_delete=models.CASCADE)
+    driver = models.ForeignKey('Driver', related_name='assignments', on_delete=models.CASCADE)
+
