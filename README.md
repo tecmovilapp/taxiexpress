@@ -64,3 +64,8 @@ pip install https://github.com/darklow/django-suit/tarball/v2
 
 Archivo de configuracion para Visual Code
 [vs.settings.json](vs.settings.json)
+
+Se deben colectar todos los archivos estaticos para que trabaje el django suit
+```
+python manage.py collectstatic
+```
