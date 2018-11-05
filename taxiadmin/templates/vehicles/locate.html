@@ -1,0 +1,80 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block content %}
+  Vehicle localization
+
+  <div id="fishControls">
+    <p>Live Location</p>
+    <p id="liveLocation"></p>
+    <input id="getFishLocation" type="button" value="Update Location" />
+  </div>
+
+  <!-- Message log -->
+  <div id="log">
+      <div id="map" style="width:300px;height:300px"></div>
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+  <!-- RSVP -->
+  <script src="https://unpkg.com/rsvp@3.1.0/dist/rsvp.min.js"></script>
+
+  <!-- GeoFire -->
+  <script src="https://cdn.firebase.com/libs/geofire/4.1.0/geofire.min.js"></script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmz7oHEd5LqSGdal0vtfWUOkxn9GSUKt4"></script>
+
+    <!--<script type="text/javascript" src="{% static 'my_code.js' %}"></script>-->
+    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAI755venVr58C5F1wExAlItIbyYFv98TQ",
+        authDomain: "taxiexpress-ceb3f.firebaseapp.com",
+        databaseURL: "https://taxiexpress-ceb3f.firebaseio.com",
+        projectId: "taxiexpress-ceb3f",
+        storageBucket: "taxiexpress-ceb3f.appspot.com",
+        messagingSenderId: "583631002658"
+      };
+      firebase.initializeApp(config);
+
+      (function() {
+          var map;
+          var marker;
+
+          var carLocationRef = firebase.database().ref('carsLocations/1');
+          carLocationRef.on('value', function(snapshot) {
+            console.log(snapshot.val().l)
+            document.getElementById("liveLocation").innerHTML = "Latitud:" + snapshot.val().l[0] + " Longitud:"+snapshot.val().l[1];
+            var myCenter = new google.maps.LatLng(snapshot.val().l[0],snapshot.val().l[1]);
+            var mapCanvas = document.getElementById("map");
+            var mapOptions = {center: myCenter, zoom: 14, scrollwheel: false,};
+            map = new google.maps.Map(mapCanvas, mapOptions);
+            marker = new google.maps.Marker({position:myCenter});
+            marker.setMap(map);
+          });
+
+
+          /*
+          var geoFire = new GeoFire(carLocationRef);
+          geoFire.get('1').then(function(location) {
+            if (location === null) {
+              console.log( "Taxi con el id #" + '1' + " no se encuentra en geoFire");
+            }
+            else {
+              console.log(" El Taxi 1 se encuentra en [" + location + "]");
+            }
+          });
+          */
+      })();
+
+
+    </script>
+
+{% endblock  %} 

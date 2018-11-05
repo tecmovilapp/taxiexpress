@@ -8,8 +8,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 
 # Create your views here.
-@staff_member_required
-def custom_admin_view(request):
+# @staff_member_required
+def locate_view(request, vehicle_id):
     """
     If you're using multiple admin sites with independent views you'll need to set
     current_app manually and use correct admin.site
@@ -17,8 +17,8 @@ def custom_admin_view(request):
     """
     context = admin.site.each_context(request)
     context.update({
-        'title': 'Custom view',
+        'title': 'Vehicle Localization',
     })
 
-    template = 'custom_template.html'
+    template = 'vehicles/locate.html'
     return render(request, template, context)
