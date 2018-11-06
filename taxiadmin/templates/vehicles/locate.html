@@ -3,17 +3,28 @@
 {% load static %}
 
 {% block content %}
-  Vehicle localization
-
-  <div id="fishControls">
-    <p>Live Location</p>
-    <p id="liveLocation"></p>
-    <input id="getFishLocation" type="button" value="Update Location" />
-  </div>
-
-  <!-- Message log -->
-  <div id="log">
-      <div id="map" style="width:300px;height:300px"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <form method="post" novalidate>
+          {% csrf_token %}
+          {{ vehicleForm.as_p }}
+          <button class="btn btn-primary" type="submit">Save</button>
+        </form>
+      </div>
+      <div class="col-lg-8">
+        <div id="fishControls">
+          <p>Live Location</p>
+          <p id="liveLocation"></p>
+          <input id="getFishLocation" type="button" value="Update Location" />
+        </div>
+      
+        <!-- Message log -->
+        <div id="log">
+            <div id="map" style="min-width:300px;min-height:300px"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
 {% endblock %}
