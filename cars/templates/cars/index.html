@@ -54,7 +54,7 @@
     (function() {
 
     // Get a reference to the database service
-    var database = firebase.database().ref('cars/1');
+    var database = firebase.database().ref('cars/2');
 
     // Generate a random Firebase location
     //var firebaseRef = firebase.database().ref('cars/1').push();
@@ -74,7 +74,7 @@
 
         navigator.geolocation.getCurrentPosition(function(position) {
             //myMap(position):
-            geoFire.set("1", [ position.coords.latitude , position.coords.longitude]).then(function() {
+            geoFire.set("2", [ position.coords.latitude , position.coords.longitude]).then(function() {
               console.log("My location initially set to [" + position.coords.latitude +", "+ position.coords.longitude + "]");
             });
             var myCenter = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);

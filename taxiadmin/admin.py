@@ -28,7 +28,6 @@ class VehicleAdmin(admin.ModelAdmin):
     list_display = ('register', 'year', 'made', 'model', 'edit_action')
     list_filter = ('number', 'year')
     search_fields = ['number', 'register']
-    list_display_links = None
 
     def get_urls(self):
         urls = super(VehicleAdmin, self).get_urls()
@@ -54,7 +53,8 @@ class VehicleAdmin(admin.ModelAdmin):
 
 @admin.register(VehicleAssignment)
 class VehicleAssignmentAdmin(admin.ModelAdmin):
-    raw_id_fields = ('vehicle', 'driver')
+    search_fields = ['vehicle__register']
+    list_display = ('vehicle', 'driver')
 
 
 @admin.register(VehicleModel)
