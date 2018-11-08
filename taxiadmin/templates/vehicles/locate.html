@@ -59,7 +59,7 @@
           var map;
           var marker;
 
-          var carLocationRef = firebase.database().ref('carsLocations/1');
+          var carLocationRef = firebase.database().ref('carsLocations/2');
           carLocationRef.on('value', function(snapshot) {
             console.log(snapshot.val().l)
             document.getElementById("liveLocation").innerHTML = "Latitud:" + snapshot.val().l[0] + " Longitud:"+snapshot.val().l[1];
