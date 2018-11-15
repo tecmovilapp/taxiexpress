@@ -64,3 +64,6 @@ pip install https://github.com/darklow/django-suit/tarball/v2
 
 Archivo de configuracion para Visual Code
 [vs.settings.json](vs.settings.json)
+
+JWT Api Authentication
+[Documentation](https://github.com/davesque/django-rest-framework-simplejwt)

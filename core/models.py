@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.contrib.auth.models import User
 
 from django.db import models
 
@@ -34,10 +35,8 @@ class Person(models.Model):
 
     id = models.AutoField(primary_key=True)
     identifier = models.CharField(max_length=30, unique=True, default='')
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=120)
     picture = models.ImageField(upload_to='files/pictures')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default='')
 
     @property
     def full_name(self):

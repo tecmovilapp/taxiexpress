@@ -22,3 +22,7 @@ virtualenv-clone==0.3.0
 virtualenvwrapper==4.8.2
 django-audit-log
 Pillow
+djangorestframework==3.9.0
+markdown==3.0.1
+django-filter==2.0.0
+djangorestframework_simplejwt

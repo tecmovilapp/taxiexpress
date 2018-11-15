@@ -16,10 +16,21 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
+from api.router import router
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
+    # api routes
+    url(r'^api/v1/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls')),
+    url(r'^api/v1/token/$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    url(r'^api/v1/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # handlers routes
     url(r'^cars/', include('cars.urls')),
     url(r'^taxiadmin/', include('taxiadmin.urls')),
     url(r'^admin/', admin.site.urls),
-    # url(r'^admin/vehicle/$', include(vehicles.urls)),
 ]
