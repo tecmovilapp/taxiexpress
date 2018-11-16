@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'cars',
     'taxiadmin',
     'core',
+
+    'rest_framework.authtoken',
     'rest_framework'
 ]
 
