@@ -41,4 +41,4 @@ class Person(models.Model):
     @property
     def full_name(self):
         """Returns person full name."""
-        return '%s %s' % (self.first_name, self.last_name)
+        return '%s %s' % (self.user.first_name, self.user.last_name)

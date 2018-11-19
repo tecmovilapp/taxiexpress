@@ -5,5 +5,4 @@ from rest_framework import serializers
 class VehicleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Vehicle
-
-        fields = ('id', 'email', 'user')
+        fields = '__all__'
