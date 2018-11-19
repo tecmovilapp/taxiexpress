@@ -11,4 +11,4 @@ class DriverSerializer(serializers.Serializer):
     picture =  serializers.CharField(max_length=500, default='')
 
     user = UserSerializer()
-    vehicle = VehicleSerializer(allow_null=True)
+    vehicle = VehicleSerializer()

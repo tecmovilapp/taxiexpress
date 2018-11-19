@@ -2,7 +2,13 @@ from taxiadmin.models import Vehicle
 from rest_framework import serializers
 
 
-class VehicleSerializer(serializers.HyperlinkedModelSerializer):
+class VehicleSerializer(serializers.ModelSerializer):
+    id = serializers.CharField()
+    register = serializers.CharField(allow_null=True)
+    number = serializers.CharField(allow_null=True)
+    year = serializers.CharField(allow_null=True)
+
+
     class Meta:
         model = Vehicle
-        fields = '__all__'
+        fields = ('id', 'register', 'number', 'year',)

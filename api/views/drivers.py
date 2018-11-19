@@ -6,7 +6,7 @@ from rest_framework import viewsets, permissions
 from rest_framework_simplejwt import authentication
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from django.shortcuts import get_object_or_404
+from rest_framework import status
 
 from api.serializers.driver import DriverSerializer
 
@@ -24,10 +24,23 @@ class DriversViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         """Retrieves a driver"""
 
-        obj_driver = Driver.objects.get(user__pk=pk)
-        serializer = DriverSerializer(obj_driver, context={'request': request})
-        
-        return Response(serializer.data)
+        try:
+            obj_driver = Driver.objects.get(user__pk=pk)
+            
+            vehicle_list = VehicleAssignment.objects.filter(driver__pk=obj_driver.pk)
+            vehicle_driver = {}
 
-    
+
+            if len(vehicle_list) == 0:
+                return Response(None, status=status.HTTP_404_NOT_FOUND)
+            
+            vehicle_driver = vehicle_list[0]
+            
+            setattr(obj_driver, 'vehicle', vehicle_driver.vehicle)
+            serializer = DriverSerializer(obj_driver, context={'request': request})
+            
+            
+            return Response(serializer.data)
+        except Driver.DoesNotExist:
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
 
