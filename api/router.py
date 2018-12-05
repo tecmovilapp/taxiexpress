@@ -8,4 +8,3 @@ router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'drivers', DriversViewSet, basename='drivers')
 router.register(r'groups', GroupViewSet)
-
