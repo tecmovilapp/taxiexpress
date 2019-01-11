@@ -1,0 +1,5 @@
+[client]
+database = taxiexpress
+user = root
+password = Q1w2e3r4t5@
+default-character-set = utf8

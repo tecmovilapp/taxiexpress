@@ -67,3 +67,8 @@ Archivo de configuracion para Visual Code
 
 JWT Api Authentication
 [Documentation](https://github.com/davesque/django-rest-framework-simplejwt)
+
+#Mysql Requirements on windows
+https://dev.mysql.com/downloads/file/?id=480226
+
+https://stackoverflow.com/questions/29846087/microsoft-visual-c-14-0-is-required-unable-to-find-vcvarsall-bat

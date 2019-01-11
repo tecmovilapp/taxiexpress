@@ -86,8 +86,12 @@ WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'taxiexpress',
+        'USER': 'root',
+        'HOST': '45.56.125.220',
+        'PORT': '3306',
+        'PASSWORD': 'Q1w2e3r4t5@'
     }
 }
 
