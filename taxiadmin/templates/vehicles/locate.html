@@ -59,8 +59,25 @@
           var map;
           var marker;
 
-          var carLocationRef = firebase.database().ref('carsLocations/2');
+          firebase.auth().signInAnonymously().catch(function(error){
+            console.log('error', error);
+          });
+
+          firebase.auth().onAuthStateChanged(function(user){
+            if (user) {
+              var isAnonymous = user.isAnonymous;
+              var uid = user.uid;
+
+              console.log(uid);
+            } else {
+              console.log('dddddddddd');
+            }
+          });
+
+          var carLocationRef = firebase.database().ref('carsLocations/1');
+          console.log(carLocationRef);
           carLocationRef.on('value', function(snapshot) {
+            console.log('dddddddddddddd');
             console.log(snapshot.val().l)
             document.getElementById("liveLocation").innerHTML = "Latitud:" + snapshot.val().l[0] + " Longitud:"+snapshot.val().l[1];
             var myCenter = new google.maps.LatLng(snapshot.val().l[0],snapshot.val().l[1]);
@@ -70,19 +87,6 @@
             marker = new google.maps.Marker({position:myCenter});
             marker.setMap(map);
           });
-
-
-          /*
-          var geoFire = new GeoFire(carLocationRef);
-          geoFire.get('1').then(function(location) {
-            if (location === null) {
-              console.log( "Taxi con el id #" + '1' + " no se encuentra en geoFire");
-            }
-            else {
-              console.log(" El Taxi 1 se encuentra en [" + location + "]");
-            }
-          });
-          */
       })();
 
 
