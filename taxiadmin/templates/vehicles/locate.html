@@ -59,34 +59,28 @@
           var map;
           var marker;
 
-          firebase.auth().signInAnonymously().catch(function(error){
-            console.log('error', error);
-          });
-
           firebase.auth().onAuthStateChanged(function(user){
             if (user) {
               var isAnonymous = user.isAnonymous;
               var uid = user.uid;
-
-              console.log(uid);
+              var carLocationRef = firebase.database().ref('carsLocations/{{vehicleId}}');
+              carLocationRef.on('value', function(snapshot) {
+                document.getElementById("liveLocation").innerHTML = "Latitud:" + snapshot.val().l[0] + " Longitud:"+snapshot.val().l[1];
+                var myCenter = new google.maps.LatLng(snapshot.val().l[0],snapshot.val().l[1]);
+                var mapCanvas = document.getElementById("map");
+                var mapOptions = {center: myCenter, zoom: 14, scrollwheel: false,};
+                map = new google.maps.Map(mapCanvas, mapOptions);
+                marker = new google.maps.Marker({position:myCenter});
+                marker.setMap(map);
+              });
             } else {
-              console.log('dddddddddd');
+              firebase.auth().signInAnonymously().catch(function(error){
+                console.log('error', error);
+              });
             }
           });
 
-          var carLocationRef = firebase.database().ref('carsLocations/1');
-          console.log(carLocationRef);
-          carLocationRef.on('value', function(snapshot) {
-            console.log('dddddddddddddd');
-            console.log(snapshot.val().l)
-            document.getElementById("liveLocation").innerHTML = "Latitud:" + snapshot.val().l[0] + " Longitud:"+snapshot.val().l[1];
-            var myCenter = new google.maps.LatLng(snapshot.val().l[0],snapshot.val().l[1]);
-            var mapCanvas = document.getElementById("map");
-            var mapOptions = {center: myCenter, zoom: 14, scrollwheel: false,};
-            map = new google.maps.Map(mapCanvas, mapOptions);
-            marker = new google.maps.Marker({position:myCenter});
-            marker.setMap(map);
-          });
+          
       })();
 
 

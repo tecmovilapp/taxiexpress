@@ -32,7 +32,8 @@ def locate_view(request, vehicle_id):
     
     context.update({
         'title': 'Vehicle Localization',
-        'vehicleForm': form
+        'vehicleForm': form,
+        'vehicleId': vehicle_id
     })
 
 
