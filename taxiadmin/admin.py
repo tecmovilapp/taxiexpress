@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from . import views
 # Register your models here.
 
-from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle, VehicleAssignment
+from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle
 
 
 admin.site.register(Driver)
@@ -51,10 +51,10 @@ class VehicleAdmin(admin.ModelAdmin):
     edit_action.short_description = "Actions"
 
 
-@admin.register(VehicleAssignment)
-class VehicleAssignmentAdmin(admin.ModelAdmin):
-    search_fields = ['vehicle__register']
-    list_display = ('vehicle', 'driver')
+#@admin.register(VehicleAssignment)
+#class VehicleAssignmentAdmin(admin.ModelAdmin):
+#    search_fields = ['vehicle__register']
+#    list_display = ('vehicle', 'driver')
 
 
 @admin.register(VehicleModel)
