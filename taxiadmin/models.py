@@ -6,17 +6,6 @@ from django.db import models
 from core.models import Documents, Person
 from core.preset_choices import VEHICLE_STATUS
 
-
-class Driver(Person):
-    """
-        Define a person who can drive a taxi.
-    """
-
-    related_documents = models.ManyToManyField(Documents)
-
-    def __str__(self):
-        return self.full_name
-
 class VehicleMaker(models.Model):
     """
         Vehicle Makers eg: Toyota, Mitsubishi, etc.
@@ -58,12 +47,17 @@ class Vehicle(models.Model):
 
     def __str__(self):
         """Return the title"""
-        return self.number
+        return '{0}-{1}'.format(self.model, self.number)
 
 
-class VehicleAssignment(models.Model):
-    """Assign vehicle to a driver."""
+class Driver(Person):
+    """
+        Define a person who can drive a taxi.
+    """
+    rating = models.FloatField(default=0)
+    related_documents = models.ManyToManyField(Documents)
+    vehicle = models.OneToOneField(Vehicle, default=None, null=True, blank=True)
 
-    vehicle = models.ForeignKey('Vehicle', related_name='assignments', on_delete=models.CASCADE)
-    driver = models.ForeignKey('Driver', related_name='assignments', on_delete=models.CASCADE)
+    def __str__(self):
+        return self.full_name
 

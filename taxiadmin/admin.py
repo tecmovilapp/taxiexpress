@@ -4,6 +4,7 @@ from django.contrib.admin import AdminSite
 from django.http import HttpResponse
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.models import User, Group
 
 from django.utils.html import format_html
 from django.http import HttpResponseRedirect
@@ -12,11 +13,15 @@ from django.core.urlresolvers import reverse
 from . import views
 # Register your models here.
 
-from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle, VehicleAssignment
+from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle
 
-
+admin.site.site_header = 'Seven'
 admin.site.register(Driver)
 admin.site.register(VehicleMaker)
+
+# admin.site.unregister(User)
+admin.site.unregister(Group)
+
 
 def edit_vehicle(modeladmin, request, queryset):
     pass
@@ -51,10 +56,10 @@ class VehicleAdmin(admin.ModelAdmin):
     edit_action.short_description = "Actions"
 
 
-@admin.register(VehicleAssignment)
-class VehicleAssignmentAdmin(admin.ModelAdmin):
-    search_fields = ['vehicle__register']
-    list_display = ('vehicle', 'driver')
+#@admin.register(VehicleAssignment)
+#class VehicleAssignmentAdmin(admin.ModelAdmin):
+#    search_fields = ['vehicle__register']
+#    list_display = ('vehicle', 'driver')
 
 
 @admin.register(VehicleModel)
