@@ -15,11 +15,11 @@ from . import views
 
 from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle
 
-
+admin.site.site_header = 'Seven'
 admin.site.register(Driver)
 admin.site.register(VehicleMaker)
 
-admin.site.unregister(User)
+# admin.site.unregister(User)
 admin.site.unregister(Group)
 
 
