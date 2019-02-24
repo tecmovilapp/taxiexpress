@@ -34,9 +34,9 @@ class Person(models.Model):
     """
 
     id = models.AutoField(primary_key=True)
-    identifier = models.CharField(max_length=30, unique=True, default='')
+    identifier = models.CharField(max_length=30, unique=True, default='', help_text='Numero de Identidad')
     picture = models.ImageField(upload_to='files/pictures')
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default='')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default='', help_text='Usuario para accesar desde el app')
 
     @property
     def full_name(self):
