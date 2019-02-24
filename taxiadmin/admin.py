@@ -4,6 +4,7 @@ from django.contrib.admin import AdminSite
 from django.http import HttpResponse
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.models import User, Group
 
 from django.utils.html import format_html
 from django.http import HttpResponseRedirect
@@ -17,6 +18,10 @@ from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle
 
 admin.site.register(Driver)
 admin.site.register(VehicleMaker)
+
+admin.site.unregister(User)
+admin.site.unregister(Group)
+
 
 def edit_vehicle(modeladmin, request, queryset):
     pass
