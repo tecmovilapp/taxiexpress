@@ -9,6 +9,8 @@ from django.contrib.auth.models import User, Group
 from django.utils.html import format_html
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.template.response import TemplateResponse
+
 
 from . import views
 # Register your models here.
@@ -65,4 +67,5 @@ class VehicleAdmin(admin.ModelAdmin):
 @admin.register(VehicleModel)
 class VehicleModelAdmin(admin.ModelAdmin):
     search_fields = ('made__title',)
+  
 
