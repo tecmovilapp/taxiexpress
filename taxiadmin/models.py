@@ -48,6 +48,9 @@ class Vehicle(models.Model):
         """Return the title"""
         return '{0}-{1}'.format(self.model, self.number)
 
+    class Meta:
+        unique_together = ('register',)
+
 
 class Driver(Person):
     """
@@ -59,4 +62,14 @@ class Driver(Person):
 
     def __str__(self):
         return self.full_name
+    
+
+class Passenger(Person):
+    """
+        Costumer model
+    """
+
+    pass
+
+
 

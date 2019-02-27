@@ -37,6 +37,7 @@ class Person(models.Model):
     identifier = models.CharField(max_length=30, unique=True, default='', help_text='Numero de Identidad')
     picture = models.ImageField(upload_to='files/pictures')
     user = models.OneToOneField(User, on_delete=models.CASCADE, default='', help_text='Usuario para accesar desde el app')
+    phone = models.CharField(max_length=30, unique=True, default='', help_text='Numero de Identidad')
 
     @property
     def full_name(self):
