@@ -41,7 +41,7 @@ def locate_view(request, vehicle_id):
     return render(request, template, context)
 
 
-@staff_member_required
+# @staff_member_required
 def rides_admin_view(request):
     """
     If you're using multiple admin sites with independent views you'll need to set
