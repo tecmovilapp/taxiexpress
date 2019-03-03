@@ -69,7 +69,8 @@ class Passenger(Person):
         Costumer model
     """
 
-    pass
+    def __str__(self):
+        return self.full_name
 
 
 

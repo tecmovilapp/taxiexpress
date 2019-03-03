@@ -189,3 +189,9 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hancoir@gmail.com'
+EMAIL_HOST_PASSWORD = 'Hancoir221989'
+EMAIL_PORT = 587

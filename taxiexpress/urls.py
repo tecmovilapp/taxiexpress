@@ -34,6 +34,7 @@ urlpatterns = [
     # handlers routes
     url(r'^cars/', include('cars.urls')),
     url(r'^admin/taxiadmin/', include('taxiadmin.urls')),
+    url(r'^accounts/', include('core.urls')),
     url(r'^admin/', admin.site.urls),
 
     url(

@@ -15,12 +15,12 @@ from django.template.response import TemplateResponse
 from . import views
 # Register your models here.
 
-from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle
+from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle, Passenger
 
 admin.site.site_header = 'Seven'
 admin.site.register(Driver)
 admin.site.register(VehicleMaker)
-
+admin.site.register(Passenger)
 # admin.site.unregister(User)
 admin.site.unregister(Group)
 
