@@ -14,8 +14,8 @@ class PassengerViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows Passenger to be viewed or edited.
     """
-    # permission_classes = (permissions.IsAuthenticated,)
-    # authentication_classes = [authentication.JWTAuthentication]
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = [authentication.JWTAuthentication]
 
     queryset = Passenger.objects.all()
     serializer_class = PassengerSerializer

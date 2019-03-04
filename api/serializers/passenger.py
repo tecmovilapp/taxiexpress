@@ -39,7 +39,7 @@ class PassengerSerializer(serializers.ModelSerializer):
         sender = EmailSender()
         message = {
             'user': user.pk,
-            'domain': 'localhost:8000',
+            'domain': get_current_site(self.context.get('request')).domain,
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': account_activation_token.make_token(user)
         }
