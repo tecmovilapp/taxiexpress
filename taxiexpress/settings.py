@@ -91,7 +91,6 @@ WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -197,6 +196,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'hancoir@gmail.com'
-EMAIL_HOST_PASSWORD = 'Hancoir221989'
+EMAIL_HOST_USER = 'seven.app.testing@gmail.com'
+EMAIL_HOST_PASSWORD = 'Taxiexpress'
 EMAIL_PORT = 587
