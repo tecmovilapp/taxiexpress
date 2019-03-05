@@ -15,6 +15,10 @@ class DocumentTypes(models.Model):
 
     def __str__(self):
         return '%s' % self.title
+    
+    class Meta:
+        verbose_name = "Tipo de Documento"
+        verbose_name_plural = "Tipos de Documentos"
 
 class Documents(models.Model):
     """
@@ -27,6 +31,9 @@ class Documents(models.Model):
 
     def __str__(self):
         return '%s-%s' % (self.title, self.type)
+    class Meta:
+        verbose_name = "Documento"
+        verbose_name_plural = "Documentos"
 
 class Person(models.Model):
     """

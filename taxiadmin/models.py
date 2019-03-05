@@ -16,6 +16,10 @@ class VehicleMaker(models.Model):
     def __str__(self):
         """Return the title"""
         return self.title
+        
+    class Meta:
+        verbose_name = "Marca de Vehículo"
+        verbose_name_plural = "Marcas de Vehículos"
 
 
 class VehicleModel(models.Model):
@@ -29,6 +33,10 @@ class VehicleModel(models.Model):
     def __str__(self):
         """Return the title"""
         return self.title
+
+    class Meta:
+        verbose_name = "Modelo de Vehículo"
+        verbose_name_plural = "Modelos de Vehículos"
 
 
 class Vehicle(models.Model):
@@ -50,6 +58,8 @@ class Vehicle(models.Model):
 
     class Meta:
         unique_together = ('register',)
+        verbose_name = "Vehículo"
+        verbose_name_plural = "Vehículos"
 
 
 class Driver(Person):
@@ -62,6 +72,10 @@ class Driver(Person):
 
     def __str__(self):
         return self.full_name
+
+    class Meta:
+        verbose_name = "Conductor"
+        verbose_name_plural = "Conductores"
     
 
 class Passenger(Person):
@@ -71,6 +85,10 @@ class Passenger(Person):
 
     def __str__(self):
         return self.full_name
+    
+    class Meta:
+        verbose_name = "Pasajero"
+        verbose_name_plural = "Pasajeros"
 
 
 
