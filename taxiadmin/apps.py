@@ -6,3 +6,5 @@ from django.apps import AppConfig
 
 class TaxiadminConfig(AppConfig):
     name = 'taxiadmin'
+    verbose_name = 'Generales'
+

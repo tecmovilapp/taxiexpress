@@ -31,7 +31,8 @@ ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.56.125.220']
 
 # Application definition
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [    
+    'suitlocale',
     #'suit',
     'core.layout.SuitConfig',
     'django.contrib.admin',
