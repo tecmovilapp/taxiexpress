@@ -1,0 +1,95 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+
+{% block content %}
+<h1>Ubicaciones</h1>
+<div class="container">
+  <div id="map" style="min-width:600px;min-height:400px"></div>
+</div>
+
+
+
+{% endblock %}
+
+{% block footer %}
+{{ block.super }}
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+
+<!-- RSVP -->
+<script src="https://unpkg.com/rsvp@3.1.0/dist/rsvp.min.js"></script>
+
+<!-- GeoFire -->
+<script src="https://cdn.firebase.com/libs/geofire/4.1.0/geofire.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmz7oHEd5LqSGdal0vtfWUOkxn9GSUKt4"></script>
+
+<!--<script type="text/javascript" src="{% static 'my_code.js' %}"></script>-->
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAI755venVr58C5F1wExAlItIbyYFv98TQ",
+    authDomain: "taxiexpress-ceb3f.firebaseapp.com",
+    databaseURL: "https://taxiexpress-ceb3f.firebaseio.com",
+    projectId: "taxiexpress-ceb3f",
+    storageBucket: "taxiexpress-ceb3f.appspot.com",
+    messagingSenderId: "583631002658"
+  };
+  firebase.initializeApp(config);
+
+  (function () {
+    var map;
+    var marker;
+    var markers = [];
+    var taxiIcon = "{% static 'icon/taxi-icon.png' %}";
+    var personIcon = "{% static 'icon/person-icon.png' %}";
+
+
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        mapCanvas = document.getElementById("map");
+        myCenter = new google.maps.LatLng(14.087963, -87.182991);
+        var mapOptions = {center: myCenter, zoom: 14, scrollwheel: false,};
+        map = new google.maps.Map(mapCanvas, mapOptions);
+        
+        // Ubicar todos los puntos en el mapa
+        var allCarsLocationsRef = firebase.database().ref('carsLocations/');
+        allCarsLocationsRef = firebase.database().ref('carsLocations').once('value').then(function (snapshot) {
+          snapshot.forEach(function (snapshot1) {
+            console.log(snapshot1.val().l[0]);
+            //markers[snapshot1.key] = snapshot1;
+            
+            markers[snapshot1.key] = new google.maps.Marker({ position: myCenter, map: map, icon: taxiIcon });
+            markers[snapshot1.key].setMap(map);
+
+          });
+        });
+
+        allCarsLocationsRef.then(() => {
+          firebase.database().ref('carsLocations').on('value', (function (snapshot) {
+            console.log(snapshot.val());
+            snapshot.forEach(function (snapshot1) {
+              console.log(snapshot1.key);
+              markers[snapshot1.key].setPosition(new google.maps.LatLng(snapshot1.val().l[0], snapshot1.val().l[1]));
+            });
+          })
+          )
+        });
+      } else {
+        firebase.auth().signInAnonymously().catch(function (error) {
+          console.log('error', error);
+        });
+      }
+    });
+
+
+  })();
+
+
+</script>
+
+{% endblock  %}

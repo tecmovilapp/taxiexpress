@@ -4,4 +4,5 @@ from . import views
 
 urlpatterns = [
     url(r'^rides', views.rides_admin_view),
+    url(r'^locations', views.locations_view),
 ]

@@ -49,7 +49,7 @@ class VehicleAdmin(admin.ModelAdmin):
 
     def edit_action(self, obj):
         return format_html(
-            '<a class="btn btn-primary" href="{}">locate</a>',
+            '<a class="btn btn-primary btn-sm" href="{}">Ubicar</a>',
             reverse('admin:vehicle-edit', args=[obj.pk]),
         )
 

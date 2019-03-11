@@ -11,6 +11,7 @@ class SuitConfig(DjangoSuitConfig):
 
     menu = (
         ParentItem('General', children=[
+            ChildItem('Ubicaciones', url='/admin/taxiadmin/locations'),
             ChildItem('Carreras', url='/admin/taxiadmin/rides'),
             ChildItem(model='taxiadmin.driver'),
             ChildItem(model='taxiadmin.passenger'),            

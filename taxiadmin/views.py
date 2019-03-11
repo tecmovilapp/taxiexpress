@@ -10,6 +10,19 @@ from taxiadmin.forms import VehicleForm
 from taxiadmin.models import Vehicle
 
 # Create your views here.
+def locations_view(request):
+    """
+    If you're using multiple admin sites with independent views you'll need to set
+    current_app manually and use correct admin.site
+    # request.current_app = 'admin'
+    """
+    context = admin.site.each_context(request)
+    context.update({
+        'title': 'Ubicaciones',
+    })
+    template = 'vehicles/locations.html'
+    return render(request, template, context)
+
 # @staff_member_required
 def locate_view(request, vehicle_id):
     """
