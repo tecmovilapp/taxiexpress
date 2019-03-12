@@ -72,3 +72,6 @@ JWT Api Authentication
 https://dev.mysql.com/downloads/file/?id=480226
 
 https://stackoverflow.com/questions/29846087/microsoft-visual-c-14-0-is-required-unable-to-find-vcvarsall-bat
+
+#password reset
+https://github.com/anx-ckreuzberger/django-rest-passwordreset

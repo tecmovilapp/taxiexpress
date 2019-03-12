@@ -46,7 +46,8 @@ INSTALLED_APPS = [
 
     'rest_framework.authtoken',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
+    'django_rest_passwordreset'
 ]
 
 MIDDLEWARE = [
@@ -91,6 +92,7 @@ WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -101,16 +103,14 @@ DATABASES = {
         'PASSWORD': 'Q1w2e3r4t5@'
     }
 }
-
-
 """
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
-"""
 
 
 # Password validation
@@ -199,3 +199,12 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'seven.app.testing@gmail.com'
 EMAIL_HOST_PASSWORD = 'Taxiexpress'
 EMAIL_PORT = 587
+
+
+DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
+    "CLASS": "django_rest_passwordreset.tokens.RandomNumberTokenGenerator",
+    "OPTIONS": {
+        "min_length": 1000,
+        "max_lenght": 9999
+    }
+}
