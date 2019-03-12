@@ -22,7 +22,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 from core.views import CustomClaimsTokenObtainPairViewSet
-from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     # api routes
@@ -30,31 +30,11 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^api/v1/token/$', CustomClaimsTokenObtainPairViewSet.as_view(), name='token_obtain_pair'),
     url(r'^api/v1/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
+    url(r'^api/v1/pwreset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
 
     # handlers routes
     url(r'^cars/', include('cars.urls')),
     url(r'^admin/taxiadmin/', include('taxiadmin.urls')),
     url(r'^accounts/', include('core.urls')),
     url(r'^admin/', admin.site.urls),
-
-    url(
-        r'^admin/password_reset/$',
-        auth_views.PasswordResetView.as_view(),
-        name='admin_password_reset',
-    ),
-    url(
-        r'^admin/password_reset/done/$',
-        auth_views.PasswordResetDoneView.as_view(),
-        name='password_reset_done',
-    ),
-    url(
-        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
-        auth_views.PasswordResetConfirmView.as_view(),
-        name='password_reset_confirm',
-    ),
-    url(
-        r'^reset/done/$',
-        auth_views.PasswordResetCompleteView.as_view(),
-        name='password_reset_complete',
-    ),
 ]
