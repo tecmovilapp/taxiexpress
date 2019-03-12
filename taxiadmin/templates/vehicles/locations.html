@@ -4,6 +4,11 @@
 
 {% block content %}
 <h1>Ubicaciones</h1>
+
+
+
+
+
 <div class="container">
   <div id="map" style="min-width:600px;min-height:400px"></div>
 </div>
@@ -43,9 +48,13 @@
     var map;
     var marker;
     var markers = [];
+    var vehicles = [];    
     var taxiIcon = "{% static 'icon/taxi-icon.png' %}";
     var personIcon = "{% static 'icon/person-icon.png' %}";
 
+    "{% for vehicle in vehicles %}"
+    vehicles["{{ vehicle.pk }}"] = {register: "{{ vehicle.register }}", number: "{{ vehicle.number }}" }    
+    "{% endfor %}"
 
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
@@ -53,18 +62,37 @@
         var uid = user.uid;
         mapCanvas = document.getElementById("map");
         myCenter = new google.maps.LatLng(14.087963, -87.182991);
-        var mapOptions = {center: myCenter, zoom: 14, scrollwheel: false,};
+        var mapOptions = { center: myCenter, zoom: 14, scrollwheel: false, };
         map = new google.maps.Map(mapCanvas, mapOptions);
-        
+
         // Ubicar todos los puntos en el mapa
         var allCarsLocationsRef = firebase.database().ref('carsLocations/');
         allCarsLocationsRef = firebase.database().ref('carsLocations').once('value').then(function (snapshot) {
           snapshot.forEach(function (snapshot1) {
             console.log(snapshot1.val().l[0]);
             //markers[snapshot1.key] = snapshot1;
-            
-            markers[snapshot1.key] = new google.maps.Marker({ position: myCenter, map: map, icon: taxiIcon });
+
+            var contentString = '<b>' + vehicles[snapshot1.key].register + "</b> <a href=/admin/taxiadmin/vehicle/" + snapshot1.key +  "/edit/>Ver</a>";
+
+            var infowindow = new google.maps.InfoWindow({
+              content: contentString
+            });
+
+            markers[snapshot1.key] = new google.maps.Marker({
+              position: myCenter,
+              map: map,
+              icon: {
+                url: taxiIcon,
+                scaledSize: new google.maps.Size(40, 40),
+              }
+            });
             markers[snapshot1.key].setMap(map);
+
+            google.maps.event.addListener(markers[snapshot1.key], 'click', function () {
+              infowindow.open(map, markers[snapshot1.key]);
+            });
+
+            infowindow.open(map, markers[snapshot1.key]);
 
           });
         });

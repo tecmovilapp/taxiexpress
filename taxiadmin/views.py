@@ -9,6 +9,8 @@ from django.shortcuts import render
 from taxiadmin.forms import VehicleForm
 from taxiadmin.models import Vehicle
 
+import json
+
 # Create your views here.
 def locations_view(request):
     """
@@ -16,9 +18,12 @@ def locations_view(request):
     current_app manually and use correct admin.site
     # request.current_app = 'admin'
     """
+    vehicles = Vehicle.objects.all()
+
     context = admin.site.each_context(request)
     context.update({
         'title': 'Ubicaciones',
+        'vehicles': vehicles
     })
     template = 'vehicles/locations.html'
     return render(request, template, context)

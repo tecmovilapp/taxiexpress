@@ -3,91 +3,99 @@
 {% load static %}
 
 {% block content %}
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-4">
-        <form method="post" novalidate>
-          {% csrf_token %}
-          {{ vehicleForm.as_p }}
-          <button class="btn btn-primary" type="submit">Save</button>
-        </form>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ vehicleForm.as_p }}
+        <button class="btn btn-primary" type="submit">Save</button>
+      </form>
+    </div>
+    <div class="col-lg-8">
+      <div id="fishControls">
+        <p>Live Location</p>
+        <p id="liveLocation"></p>
+        <input id="getFishLocation" type="button" value="Update Location" />
       </div>
-      <div class="col-lg-8">
-        <div id="fishControls">
-          <p>Live Location</p>
-          <p id="liveLocation"></p>
-          <input id="getFishLocation" type="button" value="Update Location" />
-        </div>
-      
-        <!-- Message log -->
-        <div id="log">
-            <div id="map" style="min-width:300px;min-height:300px"></div>
-        </div>
+
+      <!-- Message log -->
+      <div id="log">
+        <div id="map" style="min-width:300px;min-height:300px"></div>
       </div>
     </div>
   </div>
+</div>
 
 {% endblock %}
 
 {% block footer %}
-    {{ block.super }}
-    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+{{ block.super }}
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 
-    <!-- RSVP -->
-    <script src="https://unpkg.com/rsvp@3.1.0/dist/rsvp.min.js"></script>
+<!-- RSVP -->
+<script src="https://unpkg.com/rsvp@3.1.0/dist/rsvp.min.js"></script>
 
-    <!-- GeoFire -->
-    <script src="https://cdn.firebase.com/libs/geofire/4.1.0/geofire.min.js"></script>
+<!-- GeoFire -->
+<script src="https://cdn.firebase.com/libs/geofire/4.1.0/geofire.min.js"></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmz7oHEd5LqSGdal0vtfWUOkxn9GSUKt4"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmz7oHEd5LqSGdal0vtfWUOkxn9GSUKt4"></script>
 
-    <!--<script type="text/javascript" src="{% static 'my_code.js' %}"></script>-->
-    <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyAI755venVr58C5F1wExAlItIbyYFv98TQ",
-        authDomain: "taxiexpress-ceb3f.firebaseapp.com",
-        databaseURL: "https://taxiexpress-ceb3f.firebaseio.com",
-        projectId: "taxiexpress-ceb3f",
-        storageBucket: "taxiexpress-ceb3f.appspot.com",
-        messagingSenderId: "583631002658"
-      };
-      firebase.initializeApp(config);
+<!--<script type="text/javascript" src="{% static 'my_code.js' %}"></script>-->
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAI755venVr58C5F1wExAlItIbyYFv98TQ",
+    authDomain: "taxiexpress-ceb3f.firebaseapp.com",
+    databaseURL: "https://taxiexpress-ceb3f.firebaseio.com",
+    projectId: "taxiexpress-ceb3f",
+    storageBucket: "taxiexpress-ceb3f.appspot.com",
+    messagingSenderId: "583631002658"
+  };
+  firebase.initializeApp(config);
 
-      (function() {
-          var map;
-          var marker;
+  (function () {
+    var map;
+    var marker;
+    var taxiIcon = "{% static 'icon/taxi-icon.png' %}";
 
-          firebase.auth().onAuthStateChanged(function(user){
-            if (user) {
-              var isAnonymous = user.isAnonymous;
-              var uid = user.uid;
-              var carLocationRef = firebase.database().ref('carsLocations/{{vehicleId}}');
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var carLocationRef = firebase.database().ref('carsLocations/{{vehicleId}}');
 
-              var mapCanvas = document.getElementById("map");
-              var myCenter = new google.maps.LatLng(14.0778239,-87.1947409);
-              var mapOptions = {center: myCenter, zoom: 14, scrollwheel: false,};
-              map = new google.maps.Map(mapCanvas, mapOptions);
-              marker = new google.maps.Marker({position:myCenter, map: map});
-              marker.setMap(map);
+        var mapCanvas = document.getElementById("map");
+        var myCenter = new google.maps.LatLng(14.0778239, -87.1947409);
+        var mapOptions = { center: myCenter, zoom: 14, scrollwheel: false, };
+        map = new google.maps.Map(mapCanvas, mapOptions);
+        marker = new google.maps.Marker({
+          position: myCenter,
+          map: map,
+          icon: {
+            url: taxiIcon,
+            scaledSize: new google.maps.Size(40, 40),
+          }
+        });
+        marker.setMap(map);
 
-              carLocationRef.on('value', function(snapshot) {
-                document.getElementById("liveLocation").innerHTML = "Latitud:" + snapshot.val().l[0] + " Longitud:"+snapshot.val().l[1];   
-                marker.setPosition(new google.maps.LatLng(snapshot.val().l[0], snapshot.val().l[1]));
-                map.panTo(new google.maps.LatLng(snapshot.val().l[0], snapshot.val().l[1]));
-              });
-            } else {
-              firebase.auth().signInAnonymously().catch(function(error){
-                console.log('error', error);
-              });
-            }
-          });
-
-          
-      })();
+        carLocationRef.on('value', function (snapshot) {
+          document.getElementById("liveLocation").innerHTML = "Latitud:" + snapshot.val().l[0] + " Longitud:" + snapshot.val().l[1];
+          marker.setPosition(new google.maps.LatLng(snapshot.val().l[0], snapshot.val().l[1]));
+          map.panTo(new google.maps.LatLng(snapshot.val().l[0], snapshot.val().l[1]));
+        });
+      } else {
+        firebase.auth().signInAnonymously().catch(function (error) {
+          console.log('error', error);
+        });
+      }
+    });
 
 
-    </script>
+  })();
 
-{% endblock  %} 
+
+</script>
+
+{% endblock  %}
