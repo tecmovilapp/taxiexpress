@@ -17,11 +17,14 @@ from . import views
 
 from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle, Passenger
 admin.site.site_header = 'Seven'
-admin.site.register(Driver)
+
+class DriverModelAdmin(admin.ModelAdmin):
+    filter_horizontal = ('related_documents',)
+admin.site.register(Driver, DriverModelAdmin)
 admin.site.register(VehicleMaker)
 admin.site.register(Passenger)
 # admin.site.unregister(User)
-admin.site.unregister(Group)
+# admin.site.unregister(Group)
 
 
 def edit_vehicle(modeladmin, request, queryset):

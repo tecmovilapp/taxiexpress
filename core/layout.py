@@ -23,7 +23,7 @@ class SuitConfig(DjangoSuitConfig):
             ChildItem(model='taxiadmin.vehiclemodel'), 
             ChildItem(model='core.documenttypes'), 
         ], icon='fa fa-cog'),
-        ParentItem('Users', children=[
+        ParentItem('Usuarios', children=[
             ChildItem('Usuarios', 'auth.user'),
         ], icon='fa fa-users'),
         #ParentItem('Right Side Menu', children=[

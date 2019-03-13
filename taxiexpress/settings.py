@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.56.125.220']
 
 INSTALLED_APPS = [    
     #'suit',
+    'taxiadmin',
     'core.layout.SuitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cars',
-    'taxiadmin',
     'core',
 
     'rest_framework.authtoken',

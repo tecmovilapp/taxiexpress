@@ -67,7 +67,10 @@ class Driver(Person):
         Define a person who can drive a taxi.
     """
     rating = models.FloatField(default=0, help_text='Rating del conductor')
-    related_documents = models.ManyToManyField(Documents, help_text='Documentos asociados al conductor')
+    related_documents = models.ManyToManyField(
+        Documents, 
+        help_text='Documentos asociados al conductor',
+        verbose_name="Documentos")
     vehicle = models.OneToOneField(Vehicle, default=None, null=True, blank=True, help_text='El vehiculo asignado al conductor')
 
     def __str__(self):
