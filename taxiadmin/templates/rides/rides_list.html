@@ -5,4 +5,50 @@
 {% block content %}
 <h1>Carreras Disponibles</h1>
 
+
+<div class="results">
+    <table id="result_list">
+        <thead>
+            <tr>
+                <th scope="col" class="column-username">
+                    <div class="text"><a href="">Estado</a></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col" class="column-email">
+                    <div class="text"><a href="">Solicitada</a></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col" class="column-first_name">
+                    <div class="text"><a href="">Actualizada</a></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col" class="column-last_name">
+                    <div class="text"><a href="">Cliente</a></div>
+                    <div class="clear"></div>
+                </th>
+                <th scope="col" class="column-is_staff">
+                    <div class="text"><a href="">Conductor</a></div>
+                    <div class="clear"></div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for ride in rides %}
+            <tr class="row1">
+                <th class="field-username">
+                    <a href="/admin/auth/user/2/change/?_changelist_filters=is_staff__exact%3D1">{{ ride.to_dict.status }}</a>
+                </th>
+                <td class="field-email">{{ ride.to_dict.requestedAt }}</td>
+                <td class="field-first_name">{{ ride.to_dict.updatedAt }}</td>
+                <td class="field-last_name"><a href="#">{{ ride.to_dict.passengerName }}</a></td>
+                <td class="field-is_staff"><a href="/admin/taxiadmin/driver/{{ ride.to_dict.driverId }}/change/">{{ ride.to_dict.driverName }}</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
 {% endblock %}

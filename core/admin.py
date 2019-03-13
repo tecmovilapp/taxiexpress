@@ -8,5 +8,3 @@ from core.models import Documents, DocumentTypes
 
 admin.site.register(DocumentTypes)
 admin.site.register(Documents)
-class DocumentsModelAdmin(admin.ModelAdmin):
-    filter_horizontal = ('users',)

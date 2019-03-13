@@ -9,6 +9,8 @@ from django.shortcuts import render
 from taxiadmin.forms import VehicleForm
 from taxiadmin.models import Vehicle
 
+from google.cloud import firestore
+
 import json
 
 # Create your views here.
@@ -66,9 +68,14 @@ def rides_admin_view(request):
     current_app manually and use correct admin.site
     # request.current_app = 'admin'
     """
+    db = firestore.Client()
+    rides_ref = db.collection(u'rides')
+    rides = rides_ref.get()    
+
     context = admin.site.each_context(request)
     context.update({
-        'title': 'rides',
+        'title': 'Carreras Disponibles',
+        'rides': rides
     })
 
     template = 'rides/rides_list.html'
