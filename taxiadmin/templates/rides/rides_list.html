@@ -2,7 +2,18 @@
 
 {% load static %}
 
+
 {% block content %}
+
+
+{% block object-tools %}
+<li>
+    <a href="#" class="addlink">Agregar Carrera</a>
+</li>
+{% endblock %}
+
+
+
 <h1>Carreras Disponibles</h1>
 
 
@@ -42,7 +53,8 @@
                 <td class="field-email">{{ ride.to_dict.requestedAt }}</td>
                 <td class="field-first_name">{{ ride.to_dict.updatedAt }}</td>
                 <td class="field-last_name"><a href="#">{{ ride.to_dict.passengerName }}</a></td>
-                <td class="field-is_staff"><a href="/admin/taxiadmin/driver/{{ ride.to_dict.driverId }}/change/">{{ ride.to_dict.driverName }}</a></td>
+                <td class="field-is_staff"><a href="/admin/taxiadmin/driver/{{ ride.to_dict.driverId }}/change/">{{
+                        ride.to_dict.driverName }}</a></td>
             </tr>
             {% endfor %}
         </tbody>

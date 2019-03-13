@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'cars',
     'core',
 
+    'widget_tweaks',
     'rest_framework.authtoken',
     'rest_framework',
     'corsheaders'
