@@ -1,30 +1,30 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.admin import AdminSite
-from django.http import HttpResponse
-from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.conf.urls import url
 from django.utils.html import format_html
-from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template.response import TemplateResponse
-
-
+from django import forms
+from django.forms import ModelForm, Form
 from . import views
-# Register your models here.
 
+# Register your models here.
 from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle, Passenger
+from taxiadmin.forms import DriverForm
+
 admin.site.site_header = 'Seven'
 
 class DriverModelAdmin(admin.ModelAdmin):
+    fields = ['user', 'vehicle', 'image_tag', 'picture', 'identifier', 'phone', 'rating', 'related_documents']
+    readonly_fields = ['image_tag', 'rating']           
     filter_horizontal = ('related_documents',)
-admin.site.register(Driver, DriverModelAdmin)
-admin.site.register(VehicleMaker)
-admin.site.register(Passenger)
-# admin.site.unregister(User)
-# admin.site.unregister(Group)
+    def get_form(self, request, obj=None, **kwargs): 
+        self.form = DriverForm
+        return super(DriverModelAdmin, self).get_form(request, obj, **kwargs) 
 
 
 def edit_vehicle(modeladmin, request, queryset):
@@ -71,3 +71,8 @@ class VehicleModelAdmin(admin.ModelAdmin):
     search_fields = ('made__title',)
   
 
+admin.site.register(Driver, DriverModelAdmin)
+admin.site.register(VehicleMaker)
+admin.site.register(Passenger)
+# admin.site.unregister(User)
+# admin.site.unregister(Group)

@@ -23,6 +23,8 @@ from rest_framework_simplejwt.views import (
 )
 from core.views import CustomClaimsTokenObtainPairViewSet
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # api routes
@@ -57,4 +59,4 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(),
         name='password_reset_complete',
     ),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

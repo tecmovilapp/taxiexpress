@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 
 from django.db import models
-
 
 # Create your models here.
 
@@ -41,10 +41,15 @@ class Person(models.Model):
     """
 
     id = models.AutoField(primary_key=True)
-    identifier = models.CharField(max_length=30, unique=True, default='', help_text='Numero de Identidad')
-    picture = models.ImageField(upload_to='files/pictures')
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default='', help_text='Usuario para accesar desde el app')
-    phone = models.CharField(max_length=30, default='', help_text='Numero de telefono')
+    identifier = models.CharField(max_length=30, unique=True, default='', help_text='Número de Identidad', verbose_name = "Número de Identidad")
+    picture = models.ImageField(upload_to='files/pictures', verbose_name = "Archivo de Imágen")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default='', help_text='Usuario para accesar desde el app', verbose_name = "Usuario")
+    phone = models.CharField(max_length=30, default='', help_text='Número de teléfono', verbose_name = "Teléfono")
+
+    def image_tag(self):
+        return mark_safe('<img src="/media/%s" width="150" height="150" />' % (self.picture))
+
+    image_tag.short_description = 'Imágen'
 
     @property
     def full_name(self):

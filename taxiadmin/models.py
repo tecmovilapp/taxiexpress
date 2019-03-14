@@ -66,12 +66,12 @@ class Driver(Person):
     """
         Define a person who can drive a taxi.
     """
-    rating = models.FloatField(default=0, help_text='Rating del conductor')
+    rating = models.FloatField(default=0, help_text='Rating del conductor', verbose_name = "Rating")
     related_documents = models.ManyToManyField(
         Documents, 
         help_text='Documentos asociados al conductor',
         verbose_name="Documentos")
-    vehicle = models.OneToOneField(Vehicle, default=None, null=True, blank=True, help_text='El vehiculo asignado al conductor')
+    vehicle = models.OneToOneField(Vehicle, default=None, null=True, blank=True, help_text='El vehículo asignado al conductor', verbose_name="Vehículo")
 
     def __str__(self):
         return self.full_name
