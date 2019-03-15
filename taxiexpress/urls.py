@@ -26,6 +26,8 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 
+from django.views.generic.base import RedirectView
+
 urlpatterns = [
     # api routes
     url(r'^api/v1/', include(router.urls)),
@@ -34,6 +36,7 @@ urlpatterns = [
     url(r'^api/v1/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
 
     # handlers routes
+    url(r'^$', RedirectView.as_view(url='/admin')),
     url(r'^cars/', include('cars.urls')),
     url(r'^admin/taxiadmin/', include('taxiadmin.urls')),
     url(r'^accounts/', include('core.urls')),
