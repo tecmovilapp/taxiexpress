@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 from datetime import timedelta
 
+import pymysql
+pymysql.install_as_MySQLdb()
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -33,6 +36,8 @@ ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.56.125.220']
 
 INSTALLED_APPS = [    
     #'suit',
+    'cars',
+    'core',
     'taxiadmin',
     'core.layout.SuitConfig',
     'django.contrib.admin',
@@ -41,8 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cars',
-    'core',
+    #'cars',
+    #'core',
 
     'widget_tweaks',
     'rest_framework.authtoken',
@@ -82,9 +87,9 @@ TEMPLATES = [
     },
 ]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+#STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR, "static"),
+#]
 
 WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 
