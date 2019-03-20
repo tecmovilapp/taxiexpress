@@ -19,11 +19,15 @@ class VehicleForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(VehicleForm,self).__init__(*args, **kwargs)
-        driver = Driver.objects.get(vehicle=self.initial['id'])
-        url = "/admin/taxiadmin/driver/%s/change"
-        self.fields['driver'].initial = driver
-        self.fields['driver'].widget.attrs['disabled'] = 'disabled'
-        self.fields['driver'].help_text = mark_safe("<a href='{url}'>Ver</a>".format(url=url) % driver.id )
+        try:
+            driver = Driver.objects.get(vehicle=self.initial['id'])
+            url = "/admin/taxiadmin/driver/%s/change"
+            self.fields['driver'].initial = driver
+            self.fields['driver'].widget.attrs['disabled'] = 'disabled'
+            self.fields['driver'].help_text = mark_safe("<a href='{url}'>Ver</a>".format(url=url) % driver.id )
+        except Driver.DoesNotExist:
+            self.fields['driver'].initial = u'Sin Asignar'
+            self.fields['driver'].widget.attrs['disabled'] = 'disabled'
 
 class DriverForm(forms.ModelForm):
     #picture = ImageField(widget=PictureWidget) # TODO: To add an image to picture field, try to modify so it can be edited too, with this it only displays the image on the form  
