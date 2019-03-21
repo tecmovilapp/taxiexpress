@@ -41,7 +41,7 @@ def locate_view(request, vehicle_id):
     """
     context = admin.site.each_context(request)
     context.update({
-        'title': 'Vehicle Localization',
+        'title': 'Ubicación en Vivo',
     })
     obj_vehicle = Vehicle.objects.get(pk=vehicle_id)
 
@@ -53,8 +53,8 @@ def locate_view(request, vehicle_id):
         form = VehicleForm(instance=obj_vehicle)
     
     context.update({
-        'title': 'Vehicle Localization',
-        'vehicleForm': form,
+        'title': 'Ubicación en Vivo',
+        'form': form,
         'vehicleId': vehicle_id
     })
 

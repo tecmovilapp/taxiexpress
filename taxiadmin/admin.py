@@ -42,9 +42,9 @@ class VehicleAdmin(admin.ModelAdmin):
         urls = super(VehicleAdmin, self).get_urls()
         custom_urls = [
             url(
-                r'^(?P<vehicle_id>.+)/edit/$',
+                r'^(?P<vehicle_id>.+)/locate/$',
                 self.admin_site.admin_view(views.locate_view),
-                name='vehicle-edit',
+                name='vehicle-locate',
             ),
         ]
         return custom_urls + urls
@@ -53,7 +53,7 @@ class VehicleAdmin(admin.ModelAdmin):
     def edit_action(self, obj):
         return format_html(
             '<a class="btn btn-primary btn-sm" href="{}">Ubicar</a>',
-            reverse('admin:vehicle-edit', args=[obj.pk]),
+            reverse('admin:vehicle-locate', args=[obj.pk]),
         )
 
     edit_action.allow_tags = True

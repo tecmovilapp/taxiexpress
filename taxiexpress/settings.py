@@ -87,9 +87,9 @@ TEMPLATES = [
     },
 ]
 
-#STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR, "static"),
-#]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 

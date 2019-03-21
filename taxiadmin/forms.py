@@ -12,22 +12,28 @@ class PictureWidget(forms.widgets.Widget):
 
 class VehicleForm(ModelForm):
     #driver = forms.CharField(label=mark_safe('<a href="#" target="_blank">Conductor Asignado</a>'))
-    driver = forms.CharField(label="Conductor Asignado")
+    driver = forms.CharField(label="Conductor Asignado", disabled=True)
     class Meta:
         model = Vehicle
         fields = ['id', 'register', 'number', 'year', 'vin', 'color', 'made', 'model', 'driver']
+        readonly_fields = ('register',)
 
     def __init__(self, *args, **kwargs):
         super(VehicleForm,self).__init__(*args, **kwargs)
+        self.fields['register'].widget.attrs['disabled'] = 'disabled'
+        self.fields['number'].widget.attrs['disabled'] = 'disabled'
+        self.fields['year'].widget.attrs['disabled'] = 'disabled'
+        self.fields['vin'].widget.attrs['disabled'] = 'disabled'
+        self.fields['color'].widget.attrs['disabled'] = 'disabled'
+        self.fields['made'].widget.attrs['disabled'] = 'disabled'
+        self.fields['model'].widget.attrs['disabled'] = 'disabled'
         try:
             driver = Driver.objects.get(vehicle=self.initial['id'])
             url = "/admin/taxiadmin/driver/%s/change"
             self.fields['driver'].initial = driver
-            self.fields['driver'].widget.attrs['disabled'] = 'disabled'
             self.fields['driver'].help_text = mark_safe("<a href='{url}'>Ver</a>".format(url=url) % driver.id )
         except Driver.DoesNotExist:
             self.fields['driver'].initial = u'Sin Asignar'
-            self.fields['driver'].widget.attrs['disabled'] = 'disabled'
 
 class DriverForm(forms.ModelForm):
     #picture = ImageField(widget=PictureWidget) # TODO: To add an image to picture field, try to modify so it can be edited too, with this it only displays the image on the form  

@@ -1,33 +1,54 @@
 {% extends "admin/base_site.html" %}
+{% load widget_tweaks %}
 
 {% load static %}
 
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col-lg-4">
-      <form method="post" novalidate>
-        {% csrf_token %}
-        {{ vehicleForm.as_p }}
-        <button class="btn btn-primary" type="submit">Save</button>
-      </form>
-    </div>
-    <div class="col-lg-8">
-      <div id="fishControls">
-        <p>Live Location</p>
-        <p id="liveLocation"></p>
-        <input id="getFishLocation" type="button" value="Update Location" />
-      </div>
+<div id="fishControls">
+  <h1>Ubicación en Vivo</h1>  
+  <!-- <input id="getFishLocation" type="button" value="Update Location" /> -->
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <form action="{% url 'form_handle' %}" method="POST" class="fixed" style="padding-bottom: 149.75px;">
+      {% csrf_token %}
+      <fieldset class="suit-form module aligned ">
+        {% for field in form %}
+        <div class="form-group row form-row field-identifier">
+          {{ field.errors }}
+          <label for="inputfield" class="form-control-label col-xs-12 col-sm-3 col-md-2">{{ field.label_tag }}</label>
+          <div class="col-sm-10">
+            {% render_field field class="form-control" %}
+            {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+            {% endif %}
+          </div>
 
-      <!-- Message log -->
-      <div id="log">
-        <div id="map" style="min-width:300px;min-height:300px"></div>
-      </div>
+        </div>
+
+        {% endfor %}
+      </fieldset>
+      <a href="{% url 'admin:taxiadmin_vehicle_change' vehicleId %}" class="btn btn-primary" role="button" aria-pressed="true">Editar</a>
+      <!-- <button type="submit" class="btn btn-primary">Guardar</button> -->
+    </form>
+  </div>
+
+  <div class="col-lg-6">   
+    <!-- Message log -->
+    <div id="log">
+      <div id="map" style="min-width:300px;min-height:500px"></div>
+      <p id="liveLocation"></p>
     </div>
+    
   </div>
 </div>
 
+<div class="row">
+  
+</div>
+
 {% endblock %}
+
 
 {% block footer %}
 {{ block.super }}
@@ -81,7 +102,7 @@
         marker.setMap(map);
 
         carLocationRef.on('value', function (snapshot) {
-          document.getElementById("liveLocation").innerHTML = "Latitud:" + snapshot.val().l[0] + " Longitud:" + snapshot.val().l[1];
+          document.getElementById("liveLocation").innerHTML = "<b>Latitud:</b>" + snapshot.val().l[0] + " <b>Longitud:</b>" + snapshot.val().l[1];
           marker.setPosition(new google.maps.LatLng(snapshot.val().l[0], snapshot.val().l[1]));
           map.panTo(new google.maps.LatLng(snapshot.val().l[0], snapshot.val().l[1]));
         });
