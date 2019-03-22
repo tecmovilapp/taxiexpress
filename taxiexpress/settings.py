@@ -12,13 +12,14 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 from datetime import timedelta
-
 import pymysql
 pymysql.install_as_MySQLdb()
 
+# The Version of the Application
+APP_VERSION = '0.5.0'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -30,7 +31,6 @@ SECRET_KEY = '7mq2q%4dw_4$v=+eejc4g%hm=ohar%*a-jllz)q46w!z8feo+0'
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.56.125.220']
-
 
 # Application definition
 
@@ -82,6 +82,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'taxiexpress.context_processors.admin_media',
             ],
         },
     },
