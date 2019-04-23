@@ -5,28 +5,219 @@
 
 {% block extrastyle %}
 {{ block.super }}
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+crossorigin="anonymous">
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase-firestore.js"></script>
+<script>
+    // Initialize Firebase : Replace with your Project Config!!!!!!
+    var config = {
+        apiKey: "AIzaSyAI755venVr58C5F1wExAlItIbyYFv98TQ",
+        authDomain: "taxiexpress-ceb3f.firebaseapp.com",
+        databaseURL: "https://taxiexpress-ceb3f.firebaseio.com",
+        projectId: "taxiexpress-ceb3f",
+        storageBucket: "taxiexpress-ceb3f.appspot.com",
+        messagingSenderId: "583631002658"
+    };
+    //////////////////////////////////////////////////////////////
+    firebase.initializeApp(config);
+
+</script>
+
+<!-- Bootstrap/jQuery JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+    
+<script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyCmz7oHEd5LqSGdal0vtfWUOkxn9GSUKt4'></script> 
+   
+<script src="{% static 'js/rides/locationpicker.jquery.js' %}"></script>
+<script src="{% static 'js/rides/index.js' %}"></script>
 {% endblock %}
+
+
 
 {% block content %}
-<form action="{% url 'form_handle' %}" method="POST" class="fixed" style="padding-bottom: 149.75px;">
-    {% csrf_token %}
-    <fieldset class="suit-form module aligned ">
-        {% for field in form %}
-        <div class="form-group row form-row field-identifier">
-            {{ field.errors }}
-            <label for="inputfield" class="form-control-label col-xs-12 col-sm-3 col-md-2">{{ field.label_tag }}</label>
-            <div class="col-sm-10">
-                {% render_field field class="form-control" %}
-                {% if field.help_text %}
-                <small class="form-text text-muted">{{ field.help_text|safe }}</small>
-                {% endif %}
+<!-- Contacts Table -->
+<table id="ContactTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id Pasajero</th>
+            <th>Nombre Pasajero</th>
+            <th>Estado</th>
+            <th>Solicitado</th>
+            <th>Actualizado</th>
+            <td>Opciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="data-temp">
+            <td data-prop="passengerId"></td>
+            <td data-prop="passengerName"></td>
+            <td data-prop="status"></td>
+            <td data-prop="requestedAt"></td>
+            <td data-prop="updatedAt"></td>
+            <td>
+                <button class="btn btn-default edit">Editar</button>
+                <button class="btn btn-danger remove">Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5"></td>
+            <td><button class="btn btn-success add" id="RideAdd">Agregar</button></td>
+        </tr>
+    </tfoot>
+</table>
+
+<!-- Rides Form -->
+<div class="container-fluid">
+    <form id="RideForm">
+        <div class="modal fade" id="RideModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">CREAR CARRERA</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <b>Pasajero:</b>
+                        <div class="form-group row">
+                            <!-- Left column -->
+                            <label class="col-sm-2 col-form-label">Id</label>
+                            <div class="col-sm-2">
+                                <input type="tel" value="1" pattern="^[\d\-+]*$" class="form-control"
+                                    data-prop="passengerId" placeholder="passengerId" maxlength="100" required />
+                            </div>
+                            <!-- Right column -->
+                            <label class="col-sm-2 col-form-label">Nombre</label>
+                            <div class="col-sm-6">
+                                <input type="text" value="Jose Francisco Nieto" class="form-control"
+                                    data-prop="passengerName" placeholder="passengerName" maxlength="100" required />
+                            </div>
+                        </div>
+                        <b>Conductor:</b>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Id</label>
+                            <div class="col-sm-2">
+                                <input type="tel" value="2" pattern="^[\d\-+]*$" class="form-control"
+                                    data-prop="driverId" placeholder="driverId" maxlength="100" required />
+                            </div>
+                            <label class="col-sm-2 col-form-label">Nombre</label>
+                            <div class="col-sm-6">
+                                <input type="text" value="" class="form-control" data-prop="driverName"
+                                    placeholder="driverName" maxlength="100" />
+                            </div>
+                        </div>
+                        <b>Vehículo:</b>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Id</label>
+                            <div class="col-sm-10">
+                                <input type="tel" value="1" pattern="^[\d\-+]*$" class="form-control"
+                                    data-prop="vehicleId" placeholder="vehicleId" maxlength="100" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Pasajeros</label>
+                            <div class="col-sm-2">
+                                <input type="tel" value="3" pattern="^[\d\-+]*$" class="form-control"
+                                    data-prop="numberOfPassengers" placeholder="numberOfPassengers" maxlength="100"
+                                    required />
+                            </div>
+                            <label class="col-sm-2 col-form-label">Equipaje</label>
+                            <div class="col-sm-6">
+                                <input type="text" value="No" class="form-control" data-prop="baggage"
+                                    placeholder="baggage" maxlength="100" required />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Estado</label>
+                            <div class="col-sm-4">
+                                <input type="text" value="passengerRequest" class="form-control" data-prop="status"
+                                    placeholder="status" maxlength="100" required />
+                            </div>
+                            <label class="col-sm-2 col-form-label">Precio carrera</label>
+                            <div class="col-sm-4">
+                                <input type="text" value="150.00" class="form-control" data-prop="fee" placeholder="fee"
+                                    maxlength="100" required />
+                            </div>
+                        </div>
+                        <b>Ubicación Inicial:</b>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Latitud</label>
+                            <div class="col-sm-4">
+                                <input type="text" value="14.1029893" class="form-control" data-prop="startLatitude"
+                                    placeholder="startLatitude" maxlength="100" required id="startLatitude" />
+                            </div>
+                            <label class="col-sm-2 col-form-label">Longitud</label>
+                            <div class="col-sm-4">
+                                <input type="text" value="-807.19066769" class="form-control" data-prop="startLongitude"
+                                    placeholder="startLongitude" maxlength="100" required id="startLongitude" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label">Dirección:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="startAddress" />
+                            </div>
+                        </div>
+                        <div id="startMap" style="width: 100%; height: 400px;"></div>
+                        <div class="clearfix"></div>
+                        <script>
+
+                        </script>
+
+                        <b>Ubicación Final:</b>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Latitud</label>
+                            <div class="col-sm-4">
+                                <input type="text" value="14.1029893" class="form-control" data-prop="endLatitude"
+                                    placeholder="endLatitude" maxlength="100" required id="endLatitude" />
+                            </div>
+                            <label class="col-sm-2 col-form-label">Longitud</label>
+                            <div class="col-sm-4">
+                                <input type="text" value="-807.19066769" class="form-control" data-prop="endLongitude"
+                                    placeholder="endLongitude" maxlength="100" required id="endLongitude" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 control-label">Dirección:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="endAddress" />
+                            </div>
+                        </div>
+                        <div id="endMap" style="width: 100%; height: 400px;"></div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
             </div>
-
         </div>
-
-        {% endfor %}
-    </fieldset>
-    <button type="submit" class="btn btn-primary">Guardar</button>
-</form>
+    </form>
+</div>
 
 {% endblock %}
+
+{% block footer %}
+{{ block.super }}
+<script>
+    $(document).ready(function(){
+        $('#somecomponent').locationpicker();
+    });    
+</script>
+{% endblock %}
+
+
+
+
