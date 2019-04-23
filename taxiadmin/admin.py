@@ -16,16 +16,55 @@ from . import views
 from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle, Passenger
 from taxiadmin.forms import DriverForm
 
+from django.utils.translation import ugettext as _
+
 admin.site.site_header = 'Seven'
 
-class DriverModelAdmin(admin.ModelAdmin):
+class AdminFancyPreview(object):
+    '''
+    This will add a thumbnail image, a fancy preview for your Django admin
+    list page. Let's say you have a model that has an image field. With this
+    helper you will be able to display a thumbnail in the admin list page.
+    For example:
+        class ProductAdmin(AdminFancyPreview, admin.ModelAdmin):
+            list_display = ('name', 'preview')
+    By default we will assume that you have an image field named `image`.
+    If that's not the case, you will have to customize things.
+        class ProductAdmin(AdminFancyPreview, admin.ModelAdmin):
+            list_display = ('name', 'preview')
+            fancy_preview = {
+                'image_field': 'photo',
+                'image_size': '60px',
+            }
+    Note how you can customize the image field name but also the thumbnail size
+    by defining a `fancy_preview` dictionary.
+    '''
+
+    def preview(self, obj):
+        template = u"""<img src="{url}" style="max-height: {size}; max-width: {size};" />"""
+        config = {
+            'image_field': 'picture',
+            'image_size': '50px',
+        }
+        custom_config = getattr(self, 'fancy_preview', {})
+        config.update(custom_config)
+        picture = getattr(obj, config['image_field'], None)
+        url = picture.url if picture else '/static/taxiadmin/driver/css/driver_admin_changelist.css'
+        return template.format(url=url, size=config['image_size'])
+    preview.short_description=_('Imagen')
+    preview.allow_tags = True
+
+class DriverAdmin(AdminFancyPreview, admin.ModelAdmin):
+    list_display = ('preview', 'user', 'vehicle')
     fields = ['user', 'vehicle', 'image_tag', 'picture', 'identifier', 'phone', 'rating', 'related_documents']
     readonly_fields = ['image_tag', 'rating']           
     filter_horizontal = ('related_documents',)
     def get_form(self, request, obj=None, **kwargs): 
         self.form = DriverForm
-        return super(DriverModelAdmin, self).get_form(request, obj, **kwargs) 
+        return super(DriverAdmin, self).get_form(request, obj, **kwargs) 
 
+    def user(self,obj):
+        return obj.get_value()
 
 def edit_vehicle(modeladmin, request, queryset):
     pass
@@ -71,7 +110,7 @@ class VehicleModelAdmin(admin.ModelAdmin):
     search_fields = ('made__title',)
   
 
-admin.site.register(Driver, DriverModelAdmin)
+admin.site.register(Driver, DriverAdmin)
 admin.site.register(VehicleMaker)
 admin.site.register(Passenger)
 # admin.site.unregister(User)
