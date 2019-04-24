@@ -45,7 +45,7 @@
         // get collection of Rides
         // TODO: Add these filters on the Driver App
         // .where("status", "==", "passengerRequest").orderBy('requestedAt', 'asc') 
-        db.collection("rides").limit(5).get().then(function (querySnapshot) {
+        db.collection("rides").limit(20).orderBy('requestedAt', 'asc').get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 // clone template row and append to table body
                 //doc.child("requestedAt").val() = doc.child("requestedAt").val().toDate();
