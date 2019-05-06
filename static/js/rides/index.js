@@ -4,6 +4,7 @@
 
     // auth and setup event handlers
     var init = function () {
+        alert(1);
         auth();
         $('#ContactTable').on('click', 'button.edit', edit);        
         $('#ContactTable').on('click', 'button.remove', remove);
@@ -149,7 +150,7 @@
                 scrollwheel: false,
                 onchanged: function (currentLocation, radius, isMarkerDropped) {
                     // Uncomment line below to show alert on each Location Changed event
-                    //alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
+                    alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
                 }
             });
             return;
