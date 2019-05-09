@@ -4,7 +4,6 @@
 
     // auth and setup event handlers
     var init = function () {
-        alert(1);
         auth();
         $('#ContactTable').on('click', 'button.edit', edit);        
         $('#ContactTable').on('click', 'button.remove', remove);
@@ -150,7 +149,20 @@
                 scrollwheel: false,
                 onchanged: function (currentLocation, radius, isMarkerDropped) {
                     // Uncomment line below to show alert on each Location Changed event
-                    alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
+                    console.log($('#startLatitude').val() + $('#startLongitude').val());
+                    console.log($('#endLatitude').val() + $('#endLongitude').val());
+                    $.ajax({
+                        method: "POST",
+                        url: "https://us-central1-seven-5153f.cloudfunctions.net/getRouteDetail",
+                        data: { latitudeOrigin: $('#startLatitude').val(), longitudeOrigin: $('#startLongitude').val(), latitudeDestination: $('#endLatitude').val(), longitudeDestination: $('#endLongitude').val() },
+                        dataType: 'json',
+                        success: function (resp) {
+                            console.log(JSON.stringify(resp));
+                            //alert($("#fee").val());
+                            $("#fee").val(resp.price);
+                            $("#total").html(' L.'+ resp.price + '.00');
+                        }
+                    });
                 }
             });
             return;

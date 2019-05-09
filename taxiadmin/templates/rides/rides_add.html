@@ -28,7 +28,7 @@ crossorigin="anonymous">
 </script>
 
 <!-- Bootstrap/jQuery JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
     crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
@@ -142,12 +142,12 @@ crossorigin="anonymous">
                             <label class="col-sm-2 col-form-label">Estado</label>
                             <div class="col-sm-4">
                                 <input type="text" value="passengerRequest" class="form-control" data-prop="status"
-                                    placeholder="status" maxlength="100" required />
+                                    placeholder="status" maxlength="100" required disabled/>
                             </div>
                             <label class="col-sm-2 col-form-label">Precio carrera</label>
                             <div class="col-sm-4">
-                                <input type="text" value="150.00" class="form-control" data-prop="fee" placeholder="fee"
-                                    maxlength="100" required />
+                                <input type="text" value="150.00" class="form-control" data-prop="fee" id="fee"
+                                    maxlength="100" required disabled/>
                             </div>
                         </div>
                         <b>Ubicación Inicial:</b>
@@ -155,18 +155,18 @@ crossorigin="anonymous">
                             <label class="col-sm-2 col-form-label">Latitud</label>
                             <div class="col-sm-4">
                                 <input type="text" value="14.1029893" class="form-control" data-prop="startLatitude"
-                                    placeholder="startLatitude" maxlength="100" required id="startLatitude" />
+                                    placeholder="startLatitude" maxlength="100" required id="startLatitude" disabled/>
                             </div>
                             <label class="col-sm-2 col-form-label">Longitud</label>
                             <div class="col-sm-4">
                                 <input type="text" value="-807.19066769" class="form-control" data-prop="startLongitude"
-                                    placeholder="startLongitude" maxlength="100" required id="startLongitude" />
+                                    placeholder="startLongitude" maxlength="100" required id="startLongitude" disabled/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 control-label">Dirección:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="startAddress" />
+                                <input type="text" class="form-control" id="startAddress" data-prop="startAddress"/>
                             </div>
                         </div>
                         <div id="startMap" style="width: 100%; height: 400px;"></div>
@@ -180,23 +180,28 @@ crossorigin="anonymous">
                             <label class="col-sm-2 col-form-label">Latitud</label>
                             <div class="col-sm-4">
                                 <input type="text" value="14.1029893" class="form-control" data-prop="endLatitude"
-                                    placeholder="endLatitude" maxlength="100" required id="endLatitude" />
+                                    placeholder="endLatitude" maxlength="100" required id="endLatitude" disabled/>
                             </div>
                             <label class="col-sm-2 col-form-label">Longitud</label>
                             <div class="col-sm-4">
                                 <input type="text" value="-807.19066769" class="form-control" data-prop="endLongitude"
-                                    placeholder="endLongitude" maxlength="100" required id="endLongitude" />
+                                    placeholder="endLongitude" maxlength="100" required id="endLongitude" disabled/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 control-label">Dirección:</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="endAddress" />
+                                <input type="text" class="form-control" id="endAddress" data-prop="endAddress"/>
                             </div>
                         </div>
                         <div id="endMap" style="width: 100%; height: 400px;"></div>
                         <div class="clearfix"></div>
                     </div>
+                </br>
+                    <div style="display: flex; justify-content: flex-end">
+                            <h3>Valor de la carreara: </h3> <h3 id="total"> L. 0.00</h3>
+                          </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-primary">Guardar</button>
