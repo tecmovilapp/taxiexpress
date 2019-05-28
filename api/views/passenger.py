@@ -24,5 +24,8 @@ class PassengerViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         queryset = Passenger.objects.all()
         user = get_object_or_404(queryset, user__id=pk)
-        serializer = PassengerSerializer(user)
+        serializer_context = {
+            'request': request,
+        }
+        serializer = PassengerSerializer(user, context=serializer_context)
         return Response(serializer.data)
