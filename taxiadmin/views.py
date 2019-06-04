@@ -21,6 +21,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from pathlib import Path
 
+from django.contrib.staticfiles.templatetags.staticfiles import static
+
 
 # Create your views here.
 def get_driver_image(request, pk):
@@ -32,8 +34,10 @@ def get_driver_image(request, pk):
         else:
             return HttpResponse("No existe el archivo.") 
     except Driver.DoesNotExist:
-        media_url = settings.MEDIA_ROOT
-        image_data = open(media_url + "/files/pictures/user.png", "rb").read()
+        #media_url = settings.MEDIA_ROOT
+        #image_data = open(media_url + "/files/pictures/user.png", "rb").read()
+        media_url = settings.STATIC_ROOT
+        image_data = open(media_url + "/icon/user.png", "rb").read()
         return HttpResponse(image_data, content_type="image/png")
 
 def locations_view(request):
