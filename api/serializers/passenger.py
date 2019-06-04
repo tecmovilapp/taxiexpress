@@ -13,6 +13,9 @@ from api.serializers.user import UserSerializer
 from core.mailer.email import EmailSender
 from core.mailer.token import account_activation_token
 
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
+
 from taxiadmin.models import Passenger
 
 class PassengerSerializer(serializers.ModelSerializer):
@@ -38,14 +41,20 @@ class PassengerSerializer(serializers.ModelSerializer):
 
         sender = EmailSender()
         message = {
-            'user': user.pk,
+            'user': user.get_full_name(),
             'domain': get_current_site(self.context.get('request')).domain,
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': account_activation_token.make_token(user)
         }
-        sender.send_with_template(
-            user.email, 'mailer/activate_account.html', 'Activate your account.', message)
+        #sender.send_with_template(i
+        #    user.email, 'mailer/activate_account.html', 'Activar su cuenta de Seven.', message)
 
+        html_content = render_to_string('mailer/activate_account.html', message)
+        text_content = strip_tags(html_content)
+
+        msg = EmailMultiAlternatives('Activar su cuenta de Seven.', text_content, 'tecmovil.app@gmail.com', [user.email])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
 
         return passenger
 

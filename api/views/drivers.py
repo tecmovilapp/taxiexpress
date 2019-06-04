@@ -17,8 +17,8 @@ class DriversViewSet(viewsets.ViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = [authentication.JWTAuthentication]
+    permission_classes = []
+    authentication_classes = []
 
     def retrieve(self, request, pk=None):
         """Retrieves a driver"""

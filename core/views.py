@@ -39,9 +39,9 @@ def activate_account(request, uidb64, token):
         user.save()
         # login(request, user)
         # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponse('Gracias por validar su correo. Ahora puede iniciar sesión en el App de Seven.')
     else:
-        return HttpResponse('Activation link is invalid!')
+        return HttpResponse('El link de activación no es válido!')
 
 class CustomClaimsTokenObtainPairViewSet(TokenObtainPairView):
     serializer_class = CustomClaimsTokenObtainPairSerializer

@@ -15,8 +15,8 @@ class VehiclesViewSet(viewsets.ViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    permission_classes = (permissions.IsAuthenticated,)
-    authentication_classes = [authentication.JWTAuthentication]
+    permission_classes = []
+    authentication_classes = []
     def list(self, request):
         queryset = Vehicle.objects.all()
         serializer = VehicleSerializer(queryset, many=True)

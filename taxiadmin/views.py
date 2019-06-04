@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 from taxiadmin.forms import VehicleForm, MyForm
-from taxiadmin.models import Vehicle
+from taxiadmin.models import Vehicle, Driver
 
 from google.cloud import firestore
 
@@ -16,6 +16,10 @@ import json
 from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
+def get_driver_image(request, pk):
+    user = Driver.objects.get(user__pk=pk)
+    return HttpResponse(user.picture, content_type="image/png")
+
 def locations_view(request):
     """
     If you're using multiple admin sites with independent views you'll need to set
