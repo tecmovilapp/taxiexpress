@@ -15,10 +15,26 @@ import json
 
 from django.http import HttpResponse, HttpResponseRedirect
 
+from django.conf import settings
+
+from django.core.exceptions import ObjectDoesNotExist
+
+from pathlib import Path
+
+
 # Create your views here.
 def get_driver_image(request, pk):
-    user = Driver.objects.get(user__pk=pk)
-    return HttpResponse(user.picture, content_type="image/png")
+    try:
+        user = Driver.objects.get(user__pk=pk)
+        my_file = Path(user.picture.path)
+        if my_file.exists():
+            return HttpResponse(user.picture, content_type="image/png")
+        else:
+            return HttpResponse("No existe el archivo.") 
+    except Driver.DoesNotExist:
+        media_url = settings.MEDIA_ROOT
+        image_data = open(media_url + "/files/pictures/user.png", "rb").read()
+        return HttpResponse(image_data, content_type="image/png")
 
 def locations_view(request):
     """
