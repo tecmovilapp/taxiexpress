@@ -30,7 +30,7 @@ SECRET_KEY = '7mq2q%4dw_4$v=+eejc4g%hm=ohar%*a-jllz)q46w!z8feo+0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.56.125.220']
+ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.79.36.67', 'seven.hn', 'www.seven.hn']
 
 # Application definition
 
@@ -88,9 +88,9 @@ TEMPLATES = [
     },
 ]
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
+#STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR, "static"),
+#]
 
 WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 
@@ -160,10 +160,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/var/www/taxiexpress/static/'
+STATIC_ROOT = '/var/www/taxiexpress/static'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = '/root/taxiexpress/media'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
