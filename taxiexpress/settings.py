@@ -88,9 +88,9 @@ TEMPLATES = [
     },
 ]
 
-#STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR, "static"),
-#]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 
@@ -159,12 +159,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = '/var/www/taxiexpress/static'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+#STATIC_ROOT = '/var/www/taxiexpress/static'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_ROOT = '/root/taxiexpress/media'
+#MEDIA_ROOT = '/root/taxiexpress/media'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
