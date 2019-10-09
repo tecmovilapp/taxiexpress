@@ -28,4 +28,5 @@ class PassengerViewSet(viewsets.ModelViewSet):
             'request': request,
         }
         serializer = PassengerSerializer(user, context=serializer_context)
-        return Response(serializer.data)
+        #return Response(serializer.data, status='200', headers={'access-control-allow-origin ':'*'})
+        return Response(serializer.data, status='200')

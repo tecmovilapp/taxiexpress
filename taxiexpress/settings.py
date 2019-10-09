@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.79.36.67', 'seven.hn
 
 # Application definition
 
+
 INSTALLED_APPS = [    
     #'suit',
     'cars',
@@ -48,24 +49,24 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #'cars',
     #'core',
-
     'widget_tweaks',
     'rest_framework.authtoken',
     'rest_framework',
-    'corsheaders'
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware'
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'taxiexpress.urls'
 
@@ -161,10 +162,10 @@ USE_TZ = True
 
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-#STATIC_ROOT = '/var/www/taxiexpress/static'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = '/var/www/taxiexpress/static'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-#MEDIA_ROOT = '/root/taxiexpress/media'
+MEDIA_ROOT = '/root/taxiexpress/media'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -201,7 +202,6 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=10),
 }
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
