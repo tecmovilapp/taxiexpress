@@ -72,10 +72,10 @@ def locate_view(request, vehicle_id):
     if request.method == 'POST':
         form = VehicleForm(request.POST, instance=obj_vehicle)
         if form.is_valid():
-            form.save() 
+            form.save()
     else:
         form = VehicleForm(instance=obj_vehicle)
-    
+
     context.update({
         'title': 'Ubicación en Vivo',
         'form': form,
@@ -96,7 +96,7 @@ def rides_admin_view(request):
     """
     db = firestore.Client()
     rides_ref = db.collection(u'rides')
-    rides = rides_ref.get()    
+    rides = rides_ref.get()
 
     context = admin.site.each_context(request)
     context.update({
@@ -122,11 +122,9 @@ def form_handle(request):
             else:
                 # if sum not equal... then redirect to custom url/page 
                 return HttpResponseRedirect('/admin/taxiadmin/rides')  # mention redirect url in argument
-
     else:
         form = MyForm() # blank form object just to pass context if not post method
 
-    
     context = admin.site.each_context(request)
     context.update({
         'title': 'Agrear Carrera',

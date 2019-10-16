@@ -67,6 +67,10 @@ class Driver(Person):
         Define a person who can drive a taxi.
     """
     rating = models.FloatField(default=0, help_text='Rating del conductor', verbose_name = "Rating")
+
+    #harry
+    reviews = models.FloatField(default=0, help_text='Reviews que ha recibido el conductor', verbose_name = "Reviews")
+
     related_documents = models.ManyToManyField(
         Documents, 
         help_text='Documentos asociados al conductor',

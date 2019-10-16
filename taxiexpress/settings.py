@@ -99,6 +99,7 @@ WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -109,8 +110,6 @@ DATABASES = {
         'PASSWORD': 'Q1w2e3r4t5@'
     }
 }
-
-
 """
 DATABASES = {
     'default': {
@@ -118,7 +117,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
-"""
 
 
 # Password validation

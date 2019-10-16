@@ -26,9 +26,24 @@ class DriversViewSet(viewsets.ViewSet):
         try:
             obj_driver = Driver.objects.get(user__pk=pk)
             serializer = DriverSerializer(obj_driver, context={'request': request})
-            
-            
+
             return Response(serializer.data, status='200', headers={'access-control-allow-origin ':'*'})
         except Driver.DoesNotExist:
             return Response(None, status=status.HTTP_404_NOT_FOUND)
 
+    @action(detail=True, methods=['post'])
+    def rate(self, request, pk=None):
+        try:
+            review = request.data["review"]
+            obj_driver = Driver.objects.get(user__pk=pk)
+            obj_driver.rating = (obj_driver.rating * obj_driver.reviews + review)/(obj_driver.reviews + 1)
+            obj_driver.reviews = obj_driver.reviews + 1
+            obj_driver.save()
+
+            serializer = DriverSerializer(obj_driver, context={'request': request})
+
+            return Response(None, status='201')
+        except Driver.DoesNotExist:
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response(str(e), status='500')
