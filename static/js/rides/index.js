@@ -11,6 +11,27 @@
         $('#RideForm').submit(save);
     };
 
+    function setStatusDescription(status){
+        var description = "";
+            console.log(status);
+            if (status == 1) {
+              description = "Localizando Conductor";
+            } else if(status == 2){
+              description = "Conductor en Camino";
+            } else if(status == 3){
+              description = "Unidad Afuera";
+            }else if(status == 4){
+              description = "Carrera en Camino";
+            }else if(status == 5){
+              description = "Carrera Finalizada";
+            }else if(status == 0){
+              description = "Pendiente";
+            }
+
+        return description;  
+    }
+
+
     // init on doc ready
     $(document).ready(init);
 
@@ -59,8 +80,11 @@
                 if(data['updatedAt']){
                     data['updatedAt'] = data['updatedAt'].toDate().toLocaleString();
                 }
+                                
+                data['status'] = setStatusDescription(data['status']);                
                 
                 console.log(data['requestedAt'])
+                
                 // set cell values from Contact data
                 tr.find('td[data-prop]').each(function () {
                     var td = $(this);
