@@ -72,7 +72,12 @@
             console.log(snapshot1.val().l[0]);
             //markers[snapshot1.key] = snapshot1;
 
-            var contentString = '<b>' + vehicles[snapshot1.key].register + "</b> <a href=/admin/taxiadmin/vehicle/" + snapshot1.key +  "/locate/>Ver</a>";
+            var contentString;
+
+            if(typeof(vehicles[snapshot1.key]) !== 'undefined')
+            {
+              contentString = '<b>' + vehicles[snapshot1.key].register + "</b> <a href=/admin/taxiadmin/vehicle/" + snapshot1.key +  "/locate/>Ver</a>";
+            }
 
             var infowindow = new google.maps.InfoWindow({
               content: contentString
