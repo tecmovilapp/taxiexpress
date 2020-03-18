@@ -47,3 +47,15 @@ class DriversViewSet(viewsets.ViewSet):
             return Response(None, status=status.HTTP_404_NOT_FOUND)
         except Exception as e:
             return Response(str(e), status='500')
+
+    @action(detail=True, methods=['get'])   
+    def rate(self, request, pk=None):
+        """Retrieves a driver rate"""
+
+        try:
+            obj_driver = Driver.objects.get(user__pk=pk)
+            serializer = DriverSerializer(obj_driver, context={'request': request})
+
+            return Response(serializer.data["rating"], status='200', headers={'access-control-allow-origin ':'*'})
+        except Driver.DoesNotExist:
+            return Response(None, status=status.HTTP_404_NOT_FOUND)
