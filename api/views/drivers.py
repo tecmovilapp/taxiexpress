@@ -56,6 +56,6 @@ class DriversViewSet(viewsets.ViewSet):
             obj_driver = Driver.objects.get(user__pk=pk)
             serializer = DriverSerializer(obj_driver, context={'request': request})
 
-            return Response(serializer.data["rating"], status='200', headers={'access-control-allow-origin ':'*'})
+            return Response(serializer.data["rating"], status='200')
         except Driver.DoesNotExist:
             return Response(None, status=status.HTTP_404_NOT_FOUND)
