@@ -24,6 +24,8 @@
               description = "Carrera en Camino";
             }else if(status == 5){
               description = "Carrera Finalizada";
+            }else if(status == 6){
+              description = "Esperando Evaluación";
             }else if(status == 0){
               description = "Pendiente";
             }
