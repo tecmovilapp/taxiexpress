@@ -50,7 +50,7 @@ class DriversViewSet(viewsets.ViewSet):
             return Response(str(e), status='500')
 
     @action(detail=True, methods=['get'])   
-    def rate(self, request, pk=None):
+    def rating(self, request, pk=None):
         """Retrieves a driver rate"""
 
         try:
