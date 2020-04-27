@@ -44,22 +44,22 @@ urlpatterns = [
 
     url(
         r'^admin/password_reset/$',
-        auth_views.PasswordResetView.as_view(),
+        auth_views.PasswordResetView.as_view(template_name='admin/registration/password_reset_form.html'),
         name='admin_password_reset',
     ),
     url(
         r'^admin/password_reset/done/$',
-        auth_views.PasswordResetDoneView.as_view(),
+        auth_views.PasswordResetDoneView.as_view(template_name='admin/registration/password_reset_done.html'),
         name='password_reset_done',
     ),
     url(
         r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
-        auth_views.PasswordResetConfirmView.as_view(),
+        auth_views.PasswordResetConfirmView.as_view(template_name='admin/registration/password_reset_confirm.html'),
         name='password_reset_confirm',
     ),
     url(
         r'^reset/done/$',
-        auth_views.PasswordResetCompleteView.as_view(),
+        auth_views.PasswordResetCompleteView.as_view(template_name='admin/registration/password_reset_complete.html'),
         name='password_reset_complete',
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
