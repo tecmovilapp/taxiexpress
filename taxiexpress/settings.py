@@ -28,7 +28,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7mq2q%4dw_4$v=+eejc4g%hm=ohar%*a-jllz)q46w!z8feo+0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.79.36.67', 'seven.hn', 'www.seven.hn']
 
@@ -68,6 +68,10 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+
 ROOT_URLCONF = 'taxiexpress.urls'
 
 TEMPLATES = [
@@ -99,7 +103,7 @@ WSGI_APPLICATION = 'taxiexpress.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-"""
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -110,14 +114,15 @@ DATABASES = {
         'PASSWORD': 'Q1w2e3r4t5@'
     }
 }
-"""
+
+""""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
-
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
