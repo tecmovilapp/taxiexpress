@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
+from taxiexpress.settings import TEMPLATES
 from django.conf.urls import include, url
 from django.contrib import admin
 from api.router import router
@@ -27,6 +28,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from django.views.generic.base import RedirectView
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     # api routes
@@ -64,8 +66,8 @@ urlpatterns = [
     ),
     
     url(
-        r'^purchase/done/$',
-        auth_views.PasswordResetCompleteView.as_view(template_name='admin/registration/purchase_done.html'),
+        r'^purchase/done/$',view=
+        csrf_exempt(auth_views.PasswordResetCompleteView.as_view(template_name='admin/registration/purchase_done.html')),
         name='purchase_done',
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
