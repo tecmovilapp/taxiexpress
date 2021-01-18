@@ -5,6 +5,7 @@ from api.views.groups import GroupViewSet
 from api.views.drivers import DriversViewSet
 from api.views.passenger import PassengerViewSet
 from api.views.vehicles import VehiclesViewSet
+from api.views.purchase import PurchaseViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -12,3 +13,4 @@ router.register(r'drivers', DriversViewSet, basename='drivers')
 router.register(r'groups', GroupViewSet)
 router.register(r'passengers', PassengerViewSet)
 router.register(r'vehicles', VehiclesViewSet, basename='vehicles')
+router.register(r'purchases', PurchaseViewSet)

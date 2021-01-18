@@ -98,4 +98,32 @@ class Passenger(Person):
         verbose_name_plural = "Pasajeros"
 
 
+class Purchase(models.Model):
+    """
+        Purchase model
+    """
+    MerID = models.IntegerField(max_length=15)    
+    AcqID = models.IntegerField(max_length=11)    
+    OrderID = models.CharField(max_length=150)    
+    ResponseCode = models.IntegerField(max_length=1)    
+    ReasonCode = models.IntegerField(max_length=4)        
+    ReasonCodeDesc = models.CharField(max_length=100)    
+    ReferenceNo = models.IntegerField(max_length=12)    
+    PaddedCardNo = models.IntegerField(max_length=19)    
+    AuthCode = models.CharField(max_length=6)    
+    CVV2Result = models.CharField(max_length=1)    
+    ShipToFirstName = models.CharField(max_length=30)    
+    ShipToLastName = models.CharField(max_length=30)
+    ShipToCountry = models.IntegerField(max_length=3)
+    ShipToEmail = models.CharField(max_length=50)    
+    OriginalResponseCode = models.CharField(max_length=3)
+    Signature = models.CharField(max_length=28)
+    SignatureMethod = models.CharField(max_length=4)
+    RegisterDate = models.DateTimeField(auto_now_add=True, blank=True)
 
+    def __str__(self):
+        return self.OrderID
+
+    class Meta:
+        verbose_name = "Transacción"
+        verbose_name_plural = "Transacciones"

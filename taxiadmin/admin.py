@@ -13,7 +13,7 @@ from django.forms import ModelForm, Form
 from . import views
 
 # Register your models here.
-from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle, Passenger
+from taxiadmin.models import Driver, VehicleMaker, VehicleModel, Vehicle, Passenger, Purchase
 from taxiadmin.forms import DriverForm
 
 from django.utils.translation import ugettext as _
@@ -113,5 +113,6 @@ class VehicleModelAdmin(admin.ModelAdmin):
 admin.site.register(Driver, DriverAdmin)
 admin.site.register(VehicleMaker)
 admin.site.register(Passenger)
+admin.site.register(Purchase)
 # admin.site.unregister(User)
 # admin.site.unregister(Group)
