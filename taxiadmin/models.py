@@ -109,7 +109,7 @@ class Purchase(models.Model):
     ReasonCode = models.IntegerField(max_length=4)        
     ReasonCodeDesc = models.CharField(max_length=100)    
     ReferenceNo = models.CharField(max_length=20)    
-    PaddedCardNo = models.IntegerField(max_length=19, null=True)    
+    PaddedCardNo = models.IntegerField(max_length=19, null=True,blank=True)    
     AuthCode = models.CharField(max_length=6)    
     CVV2Result = models.CharField(max_length=1)    
     ShipToFirstName = models.CharField(max_length=30, null=True)    
