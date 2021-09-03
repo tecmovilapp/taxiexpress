@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+from django.utils.translation import gettext_lazy as _
 import os
 from datetime import timedelta
 import pymysql
@@ -30,13 +31,14 @@ SECRET_KEY = '7mq2q%4dw_4$v=+eejc4g%hm=ohar%*a-jllz)q46w!z8feo+0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1', '45.79.36.67', 'seven.hn', 'www.seven.hn']
+ALLOWED_HOSTS = ['127.0.0.0', 'localhost', '127.0.0.1',
+                 '45.79.36.67', 'seven.hn', 'www.seven.hn']
 
 # Application definition
 
 
-INSTALLED_APPS = [    
-    #'suit',
+INSTALLED_APPS = [
+    # 'suit',
     'cars',
     'core',
     'taxiadmin',
@@ -47,8 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'cars',
-    #'core',
+    # 'cars',
+    # 'core',
     'widget_tweaks',
     'rest_framework.authtoken',
     'rest_framework',
@@ -71,7 +73,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 X_FRAME_OPTIONS = 'ALLOWALL'
 
-XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+XS_SHARING_ALLOWED_METHODS = ['POST', 'GET', 'OPTIONS', 'PUT', 'DELETE']
 
 ROOT_URLCONF = 'taxiexpress.urls'
 
@@ -147,7 +149,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-from django.utils.translation import gettext_lazy as _
 LANGUAGES = [
     ('es', _('Spanish')),
 ]

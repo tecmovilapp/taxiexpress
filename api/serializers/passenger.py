@@ -1,6 +1,5 @@
 
 
-
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
@@ -18,6 +17,9 @@ from django.utils.html import strip_tags
 
 from taxiadmin.models import Passenger
 
+import uuid
+
+
 class PassengerSerializer(serializers.ModelSerializer):
 
     user = UserSerializer()
@@ -26,7 +28,6 @@ class PassengerSerializer(serializers.ModelSerializer):
         model = Passenger
         fields = ('identifier', 'user', 'phone')
 
-    
     def create(self, validated_data):
         user_data = validated_data.pop('user')
         user = User(
@@ -35,9 +36,11 @@ class PassengerSerializer(serializers.ModelSerializer):
             is_active=False)
         user.set_password(user_data.get('password'))
         user.save()
-    
-        passenger = Passenger.objects.create(user=user,
-            identifier=validated_data.get('identifier'), phone=validated_data.get('phone'))
+
+        #passenger = Passenger.objects.create(user=user, identifier=validated_data.get('identifier'), phone=validated_data.get('phone'))
+
+        passenger = Passenger.objects.create(user=user, identifier=str(
+            uuid.uuid4()), phone=validated_data.get('phone'))
 
         sender = EmailSender()
         message = {
@@ -46,17 +49,16 @@ class PassengerSerializer(serializers.ModelSerializer):
             'uid': urlsafe_base64_encode(force_bytes(user.pk)),
             'token': account_activation_token.make_token(user)
         }
-        #sender.send_with_template(i
+        # sender.send_with_template(i
         #    user.email, 'mailer/activate_account.html', 'Activar su cuenta de Seven.', message)
 
-        html_content = render_to_string('mailer/activate_account.html', message)
+        html_content = render_to_string(
+            'mailer/activate_account.html', message)
         text_content = strip_tags(html_content)
 
-        msg = EmailMultiAlternatives('Activar su cuenta de Seven.', text_content, 'tecmovil.app@gmail.com', [user.email])
+        msg = EmailMultiAlternatives(
+            'Activar su cuenta de Seven.', text_content, 'tecmovil.app@gmail.com', [user.email])
         msg.attach_alternative(html_content, "text/html")
         msg.send()
 
         return passenger
-
-
-        
