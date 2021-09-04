@@ -37,7 +37,7 @@ class PassengerSerializer(serializers.ModelSerializer):
         user = User(
             email=user_data.get('email'), username=user_data.get('email'),
             first_name=user_data.get('first_name'), last_name=user_data.get('last_name', ''),
-            is_active=user_data.get('is_active'))
+            is_active=True)
         user.set_password(user_data.get('password'))
         user.save()
 
