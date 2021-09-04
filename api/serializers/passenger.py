@@ -30,10 +30,14 @@ class PassengerSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user_data = validated_data.pop('user')
+ #       user = User(
+ #           email=user_data.get('email'), username=user_data.get('email'),
+ #           first_name=user_data.get('first_name'), last_name=user_data.get('last_name', ''),
+ #           is_active=False)
         user = User(
             email=user_data.get('email'), username=user_data.get('email'),
             first_name=user_data.get('first_name'), last_name=user_data.get('last_name', ''),
-            is_active=False)
+            is_active=user_data.get('is_activate'))
         user.set_password(user_data.get('password'))
         user.save()
 
